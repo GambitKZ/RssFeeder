@@ -10,13 +10,11 @@ public record FeedItemObject : ITableEntity
 
     public string PartitionKey { get; set; } = default!;
 
-    //public string Name { get; init; } = default!;
-
     public string Title { get; set; }
 
     public string Content { get; set; }
 
-    public Uri Link { get; set; }
+    public string Link { get; set; }
 
     public ETag ETag { get; set; } = default!;
 

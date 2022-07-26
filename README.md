@@ -12,7 +12,8 @@ First - implement MVP to understand what do I want.
 
 - [x] Write an MVP that return Hardcoded RSS
 - [x] Write a logic that load the data *FROM* Azure Table
-- [ ] Write a logic that allow to load the data *INTO* Azure Table
+- [x] Write a logic that allow to load one feed *INTO* Azure Table
+- [ ] Write a logic that allow to load multiple feeds *INTO* Azure Table using Batch Insert.
 
 ## Structure
 

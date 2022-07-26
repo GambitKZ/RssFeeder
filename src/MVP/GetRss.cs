@@ -63,7 +63,7 @@ public static class GetRss
             items.Add(new SyndicationItem(
                 item.Title,
                 item.Content,
-                item.Link,
+                new Uri(item.Link.Trim('\"')),
                 item.RowKey,
                 item.Timestamp.Value)
                 );
@@ -79,7 +79,7 @@ public static class GetRss
                 "This is my test feed", new Uri("http://SomeURI"));
         feed.Authors.Add(new SyndicationPerson("rusnigdrag@gmail.com"));
         feed.Categories.Add(new SyndicationCategory("Mentoring URLs"));
-        feed.Description = new TextSyndicationContent("Hardcoded example of RSS");
+        feed.Description = new TextSyndicationContent("RSS taken from the Azure Table");
 
         feed.Items = items;
 

@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI", "src\WebUI\WebUI.cs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.AcceptanceTests", "tests\WebUI.AcceptanceTests\WebUI.AcceptanceTests.csproj", "{712BEC26-420A-40F8-8C79-FD6896353D71}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVP", "src\MVP\MVP.csproj", "{29FDE421-D9DF-49AB-A13C-DF9D18AD674E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVP", "src\MVP\MVP.csproj", "{29FDE421-D9DF-49AB-A13C-DF9D18AD674E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
