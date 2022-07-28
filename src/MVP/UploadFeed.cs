@@ -26,7 +26,7 @@ public static class UploadFeed
             RowKey = Guid.NewGuid().ToString(),
             Title = feedItem.Title,
             Content = feedItem.Content,
-            Link = feedItem.Link
+            Link = feedItem.Link.ToString()
         };
     }
 }

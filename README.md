@@ -13,7 +13,10 @@ First - implement MVP to understand what do I want.
 - [x] Write an MVP that return Hardcoded RSS
 - [x] Write a logic that load the data *FROM* Azure Table
 - [x] Write a logic that allow to load one feed *INTO* Azure Table
-- [ ] Write a logic that allow to load multiple feeds *INTO* Azure Table using Batch Insert.
+- [x] Write a logic that allow to load multiple feeds *INTO* Azure Table using Batch Insert.
+- [ ] Create "SharedCore" and move into it common things
+- [ ] Update "Application"
+- [ ] Where the Feed forming should be done?
 
 ## Structure
 
