@@ -1,42 +1,71 @@
-﻿using RssFeeder.SharedKernel.Interfaces;
+﻿using Azure.Data.Tables;
+using RssFeeder.Infrastructure.AzureTable.Models;
+using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.SharedKernel.Models;
 
-namespace RssFeeder.Infrastructure.AzureTable
+namespace RssFeeder.Infrastructure.AzureTable;
+
+public class AzureTableRepository<T> : IRepositoryBase<T> where T : FeedItem
 {
-    public class AzureTableRepository<T> : IRepositoryBase<T>
+    private List<TableTransactionAction> _transactionLog = new();
+
+    public AzureTableRepository(string tableName)
     {
-        // Initiate Storage Account
-        public CloudStorageAccount StorageAccount()
+        var tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+
+        TableClient = tableServiceClient.GetTableClient(tableName: tableName);
+    }
+
+    private TableClient TableClient { get; }
+
+    public void Add(T entity)
+    {
+        AddTransaction(entity, TableTransactionActionType.Add);
+    }
+
+    public void AddRange(IEnumerable<T> entities)
+    {
+        foreach (var item in entities)
         {
-            return CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"))
+            AddTransaction(item, TableTransactionActionType.Add);
+        }
+    }
+
+    public Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        var count = _transactionLog.Count;
+
+        if (count > 0)
+        {
+            await TableClient.SubmitTransactionAsync(_transactionLog, cancellationToken);
+            _transactionLog.Clear();
         }
 
-        // Initiate the Table
-        // Initiate a Partition Key
-        // Initiate the Context. Ok there is no Context
+        return count;
+    }
 
-        public Task<T> AddAsync(T entity, CancellationToken cancellationToken = default)
+    private void AddTransaction(T item, TableTransactionActionType transactionType)
+    {
+        var feedObject = new FeedItemAzureTableObject
         {
-            throw new NotImplementedException();
-        }
+            PartitionKey = "MentoringProgram",
+            RowKey = Guid.NewGuid().ToString(),
+            Title = item.Title,
+            Content = item.Content,
+            Link = item.Link
+        };
 
-        public Task<IEnumerable<T>> AddRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
+        var action = new TableTransactionAction(transactionType, feedObject);
+        _transactionLog.Add(action);
     }
 }

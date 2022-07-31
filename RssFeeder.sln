@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "src\SharedK
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.AzureTable", "src\Infrastructure.AzureTable\Infrastructure.AzureTable.csproj", "{4B511482-0BBD-4E0A-BE14-8221E558DC1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.AzureFunction", "src\Web.AzureFunction\Web.AzureFunction.csproj", "{FCD26109-5E94-46F0-B6D6-617286E9E7CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{4B511482-0BBD-4E0A-BE14-8221E558DC1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B511482-0BBD-4E0A-BE14-8221E558DC1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B511482-0BBD-4E0A-BE14-8221E558DC1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD26109-5E94-46F0-B6D6-617286E9E7CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD26109-5E94-46F0-B6D6-617286E9E7CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD26109-5E94-46F0-B6D6-617286E9E7CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD26109-5E94-46F0-B6D6-617286E9E7CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{29FDE421-D9DF-49AB-A13C-DF9D18AD674E} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{A7A4C6CA-B72D-4018-ADE5-C8C0B61B10B5} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{4B511482-0BBD-4E0A-BE14-8221E558DC1F} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{FCD26109-5E94-46F0-B6D6-617286E9E7CF} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}

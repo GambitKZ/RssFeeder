@@ -20,7 +20,6 @@ local.settings.json
 [Rr]eleases/
 x64/
 x86/
-build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -28,12 +27,8 @@ bld/
 
 # Visual Studio 2015 cache/options directory
 .vs/
-
-# Visual Studio Code
-.vscode/
-
-# Jetbrains Rider cache/options directory
-.idea/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -52,7 +47,6 @@ dlldata.c
 project.lock.json
 project.fragment.lock.json
 artifacts/
-
 
 *_i.c
 *_p.c
@@ -152,16 +146,13 @@ publish/
 *.azurePubxml
 # TODO: Comment the next line if you want to checkin your web deploy settings
 # but database connection strings (with potential passwords) will be unencrypted
-*.pubxml
+#*.pubxml
 *.publishproj
 
 # Microsoft Azure Web App publish settings. Comment the next line if you want to
 # checkin your Azure Web App publish settings, but sensitive information contained
 # in these scripts will be unencrypted
 PublishScripts/
-# Let's monitor and uncomment if necessary
-ServiceDependencies/
-
 
 # NuGet Packages
 *.nupkg
@@ -183,10 +174,7 @@ csx/
 ecf/
 rcf/
 
-# Microsoft Azure ApplicationInsights config file
-ApplicationInsights.config
-
-# Windows Store app package directory
+# Windows Store app package directories and files
 AppPackages/
 BundleArtifacts/
 Package.StoreAssociation.xml
@@ -210,13 +198,9 @@ ClientBin/
 node_modules/
 orleans.codegen.cs
 
-/node_modules
-
-
 # Since there are multiple workflows, uncomment next line to ignore bower_components
 # (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
 #bower_components/
-
 
 # RIA/Silverlight projects
 Generated_Code/
@@ -267,10 +251,6 @@ paket-files/
 
 # FAKE - F# Make
 .fake/
-/NDependOut
-/RssFeeder.ndproj
-/.mfractor
-src/WebUI/ClientApp/package-lock.json
 
 # JetBrains Rider
 .idea/

@@ -33,8 +33,8 @@ public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemComman
         };
 
         // add to Context and Save
-        await _repository.AddAsync(feed);
-        await _repository.SaveChangesAsync();
+        _repository.Add(feed);
+        await _repository.SaveChangesAsync(cancellationToken);
 
         // Notify that it was done
         feed.AddDomainEvent(new FeedItemSavedEvent(feed));
