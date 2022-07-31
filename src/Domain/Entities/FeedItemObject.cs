@@ -1,12 +1,14 @@
-﻿namespace RssFeeder.Domain.Entities;
+﻿using RssFeeder.SharedKernel.Interfaces;
 
-public class FeedItemObject
+namespace RssFeeder.Domain.Entities;
+
+public class FeedItemObject : BaseAuditableEntity, IFeedItem
 {
     public string Title { get; set; }
 
     public string Content { get; set; }
 
-    public Uri Link { get; set; }
+    public string Link { get; set; }
 
     public string Id { get; set; }
 

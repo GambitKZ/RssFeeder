@@ -2,20 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Data.Tables;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 
 namespace MVP;
 
-public static class UploadBatchOfFeed
+public static class UploadBatchOfFeedTransaction
 {
-    [FunctionName("UploadBatchOfFeed")]
+    [FunctionName("UploadBatchOfFeedTransaction")]
     public static async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
         ILogger log)
@@ -23,11 +22,21 @@ public static class UploadBatchOfFeed
         string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
         dynamic feedItems = JsonConvert.DeserializeObject<List<FeedItemRequestBody>>(requestBody);
 
-        TableBatchOperation tableOperations = new();
+        // New instance of the TableClient class
+        TableServiceClient tableServiceClient = new TableServiceClient(
+            Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+
+        // New instance of TableClient class referencing the server-side table
+        TableClient tableClient = tableServiceClient.GetTableClient(
+            tableName: "rssFeed"
+        );
+        await tableClient.CreateIfNotExistsAsync();
+
+        List<TableTransactionAction> transactions = new();
 
         foreach (var item in feedItems)
         {
-            var batchItem = new FeedItemObjectForBatch()
+            var entity = new FeedItemObject
             {
                 PartitionKey = "MentoringProgram",
                 RowKey = Guid.NewGuid().ToString(),
@@ -36,18 +45,11 @@ public static class UploadBatchOfFeed
                 Link = item.Link.ToString()
             };
 
-            tableOperations.Insert(batchItem);
+            var action = new TableTransactionAction(TableTransactionActionType.Add, entity);
+            transactions.Add(action);
         }
 
-        CloudStorageAccount cloudStoageAccount = CloudStorageAccount.Parse(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
-
-        CloudTableClient cloudTableClient = cloudStoageAccount.CreateCloudTableClient();
-
-        CloudTable cloudTable = cloudTableClient.GetTableReference("rssFeed");
-
-        await cloudTable.CreateIfNotExistsAsync();
-
-        await cloudTable.ExecuteBatchAsync(tableOperations);
+        await tableClient.SubmitTransactionAsync(transactions);
 
         return new OkResult();
     }
