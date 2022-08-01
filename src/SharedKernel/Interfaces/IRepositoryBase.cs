@@ -1,6 +1,6 @@
 ﻿namespace RssFeeder.SharedKernel.Interfaces;
 
-public interface IRepositoryBase<T> where T : class
+public interface IRepositoryBase<T> where T : class, IFeedItem
 {
     void Add(T entity);
 

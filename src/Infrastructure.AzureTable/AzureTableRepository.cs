@@ -1,17 +1,16 @@
 ﻿using Azure.Data.Tables;
 using RssFeeder.Infrastructure.AzureTable.Models;
 using RssFeeder.SharedKernel.Interfaces;
-using RssFeeder.SharedKernel.Models;
 
 namespace RssFeeder.Infrastructure.AzureTable;
 
-public class AzureTableRepository<T> : IRepositoryBase<T> where T : FeedItem
+public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeedItem
 {
     private List<TableTransactionAction> _transactionLog = new();
 
-    public AzureTableRepository(string tableName)
+    public AzureTableRepository(string connectionString, string tableName)
     {
-        var tableServiceClient = new TableServiceClient(Environment.GetEnvironmentVariable("COSMOS_CONNECTION_STRING"));
+        var tableServiceClient = new TableServiceClient(connectionString);
 
         TableClient = tableServiceClient.GetTableClient(tableName: tableName);
     }
