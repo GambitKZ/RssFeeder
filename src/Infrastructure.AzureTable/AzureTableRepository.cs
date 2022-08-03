@@ -40,6 +40,22 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
         throw new NotImplementedException();
     }
 
+    public async Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default)
+    {
+        var items = TableClient.QueryAsync<FeedItemAzureTableObject>(
+            filter: $"PartitionKey eq 'MentoringProgram'",
+            cancellationToken: cancellationToken);
+
+        List<IFeedItem> feeds = new();
+
+        await foreach (var item in items)
+        {
+            feeds.Add(item);
+        }
+
+        return (IEnumerable<T>)feeds;
+    }
+
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         var count = _transactionLog.Count;

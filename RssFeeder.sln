@@ -25,11 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebUI.AcceptanceTests", "te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVP", "src\MVP\MVP.csproj", "{29FDE421-D9DF-49AB-A13C-DF9D18AD674E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{A7A4C6CA-B72D-4018-ADE5-C8C0B61B10B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{A7A4C6CA-B72D-4018-ADE5-C8C0B61B10B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.AzureTable", "src\Infrastructure.AzureTable\Infrastructure.AzureTable.csproj", "{4B511482-0BBD-4E0A-BE14-8221E558DC1F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.AzureTable", "src\Infrastructure.AzureTable\Infrastructure.AzureTable.csproj", "{4B511482-0BBD-4E0A-BE14-8221E558DC1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.AzureFunction", "src\Web.AzureFunction\Web.AzureFunction.csproj", "{FCD26109-5E94-46F0-B6D6-617286E9E7CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.AzureFunction", "src\Web.AzureFunction\Web.AzureFunction.csproj", "{FCD26109-5E94-46F0-B6D6-617286E9E7CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
