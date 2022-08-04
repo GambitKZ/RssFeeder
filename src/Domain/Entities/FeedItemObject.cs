@@ -13,4 +13,5 @@ public class FeedItemObject : BaseAuditableEntity, IFeedItem
     public string Id { get; set; }
 
     public DateTimeOffset UpdateTime { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
 }

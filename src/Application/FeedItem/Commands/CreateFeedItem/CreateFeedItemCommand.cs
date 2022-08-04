@@ -11,6 +11,7 @@ public class CreateFeedItemCommand : IRequest<string>, IFeedItem
     public string Title { get; set; }
     public string Content { get; set; }
     public string Link { get; set; }
+    public DateTimeOffset? Timestamp { get; set; }
 }
 
 public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemCommand, string>

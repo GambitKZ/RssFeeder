@@ -1,6 +1,6 @@
-﻿using RssFeeder.Application.Common.Interfaces;
-using MediatR.Pipeline;
+﻿using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
+using RssFeeder.Application.Common.Interfaces;
 
 namespace RssFeeder.Application.Common.Behaviours;
 

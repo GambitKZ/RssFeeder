@@ -1,11 +1,11 @@
 ﻿using System.Diagnostics;
-using RssFeeder.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using RssFeeder.Application.Common.Interfaces;
 
 namespace RssFeeder.Application.Common.Behaviours;
 
-public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;

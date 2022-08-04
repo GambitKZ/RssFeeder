@@ -1,4 +1,5 @@
-﻿using Azure;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Azure;
 using Azure.Data.Tables;
 using RssFeeder.SharedKernel.Interfaces;
 
@@ -17,4 +18,7 @@ public class FeedItemAzureTableObject : IFeedItem, ITableEntity
     public ETag ETag { get; set; } = default!;
 
     public DateTimeOffset? Timestamp { get; set; } = default!;
+
+    [NotMapped]
+    public string? Id { get; set; }
 }
