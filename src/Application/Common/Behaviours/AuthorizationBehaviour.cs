@@ -6,6 +6,7 @@ using RssFeeder.Application.Common.Security;
 
 namespace RssFeeder.Application.Common.Behaviours;
 
+// Don't need it
 public class AuthorizationBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly ICurrentUserService _currentUserService;

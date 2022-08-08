@@ -5,6 +5,7 @@ using RssFeeder.Application.Common.Interfaces;
 
 namespace RssFeeder.Application.Common.Behaviours;
 
+// Overall - not necessary if you have "ApplicationInsight"
 public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
     private readonly Stopwatch _timer;

@@ -48,6 +48,8 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
         List<IFeedItem> feeds = new();
 
+        // Let's Automap this
+
         await foreach (var item in items)
         {
             feeds.Add(item);

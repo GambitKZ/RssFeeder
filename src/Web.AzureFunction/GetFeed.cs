@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
-
 using RssFeeder.Application.RssFeed.Queries.GetRss;
 
 namespace RssFeeder.Web.AzureFunction;
@@ -24,9 +23,8 @@ public class GetFeed
         [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
         ILogger log)
     {
-        GetRssFeedQuery feed = new();
-
-        var test = await _mediator.Send(feed);
+        //var test = await _mediator.Send(new CreateTodoListCommand());
+        var rssFeed = await _mediator.Send(new GetRssFeedQuery());
 
         //log.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -40,6 +38,7 @@ public class GetFeed
         //    ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
         //    : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
-        return new OkObjectResult("Ok");
+        // Issue of Function https://github.com/Azure/azure-functions-host/issues/2896
+        return new ContentResult { Content = rssFeed, ContentType = "application/xml" };
     }
 }

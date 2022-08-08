@@ -4,6 +4,7 @@ using RssFeeder.Application.Common.Interfaces;
 
 namespace RssFeeder.Application.Common.Behaviours;
 
+// Triggered with each hit on Mediator
 public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
 {
     private readonly ILogger _logger;
@@ -19,8 +20,11 @@ public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where T
 
     public async Task Process(TRequest request, CancellationToken cancellationToken)
     {
+        // Okay, I think I need to add here logging into Application Insight or something.
+
         var requestName = typeof(TRequest).Name;
-        var userId = _currentUserService.UserId ?? string.Empty;
+        //var userId = _currentUserService.UserId ?? string.Empty;
+        var userId = string.Empty;
         string userName = string.Empty;
 
         if (!string.IsNullOrEmpty(userId))

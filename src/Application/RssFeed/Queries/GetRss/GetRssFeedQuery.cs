@@ -2,28 +2,25 @@
 using System.Text;
 using System.Xml;
 using MediatR;
-using RssFeeder.Application.FeedItem.Queries.GetAllFeedItems;
+using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Application.RssFeed.Queries.GetRss;
 
 public class GetRssFeedQuery : IRequest<string>
-{
-}
+{ }
 
-// no Need for Async
 public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
 {
-    private readonly IMediator _mediator;
+    private readonly IRepositoryBase<IFeedItem> _repository;
 
-    public GetRssFeedQueryHandler(IMediator mediator)
+    public GetRssFeedQueryHandler(IRepositoryBase<IFeedItem> repository)
     {
-        // Maybe that's an error. He cannot call himself?
-        _mediator = mediator;
+        _repository = repository;
     }
 
     public async Task<string> Handle(GetRssFeedQuery request, CancellationToken cancellationToken)
     {
-        var listOfFeeds = await _mediator.Send(new GetAllFeedItemsQuery());
+        var listOfFeeds = await _repository.GetAll(cancellationToken);
 
         List<SyndicationItem> items = new();
         DateTimeOffset? latestDate = null;
