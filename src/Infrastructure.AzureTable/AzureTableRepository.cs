@@ -1,18 +1,22 @@
-﻿using Azure.Data.Tables;
+﻿using AutoMapper;
+using Azure.Data.Tables;
 using RssFeeder.Infrastructure.AzureTable.Models;
 using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.SharedKernel.Models;
 
 namespace RssFeeder.Infrastructure.AzureTable;
 
 public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeedItem
 {
+    private readonly IMapper _mapper;
     private List<TableTransactionAction> _transactionLog = new();
 
-    public AzureTableRepository(string connectionString, string tableName)
+    public AzureTableRepository(string connectionString, string tableName, IMapper mapper)
     {
         var tableServiceClient = new TableServiceClient(connectionString);
 
         TableClient = tableServiceClient.GetTableClient(tableName: tableName);
+        _mapper = mapper;
     }
 
     private TableClient TableClient { get; }
@@ -43,16 +47,14 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     public async Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default)
     {
         var items = TableClient.QueryAsync<FeedItemAzureTableObject>(
-            filter: $"PartitionKey eq 'MentoringProgram'",
+            filter: "PartitionKey eq 'MentoringProgram'",
             cancellationToken: cancellationToken);
 
         List<IFeedItem> feeds = new();
 
-        // Let's Automap this
-
         await foreach (var item in items)
         {
-            feeds.Add(item);
+            feeds.Add(_mapper.Map<FeedItemAzureTableObject, FeedItem>(item));
         }
 
         return (IEnumerable<T>)feeds;
