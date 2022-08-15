@@ -40,11 +40,15 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
             }
         }
 
+        // Otherwise I receive them in wrong order
+        items.Reverse();
+
         SyndicationFeed feed = new SyndicationFeed("Gambit's Personal RSS",
                 "This is my test feed", new Uri("http://SomeURI"));
         feed.Authors.Add(new SyndicationPerson("rusnigdrag@gmail.com"));
         feed.Categories.Add(new SyndicationCategory("Mentoring URLs"));
-        feed.Description = new TextSyndicationContent("RSS taken from the Azure Table");
+        feed.Description = new TextSyndicationContent(
+            "RSS that provide the links to the articles given in mentoring program");
 
         feed.Items = items;
 

@@ -16,7 +16,8 @@ First - implement MVP to understand what do I want.
 - [x] Write a logic that allow to load multiple feeds *INTO* Azure Table using Batch Insert.
 - [x] Create "SharedCore" and move into it common things
 - [x] Update "Application"
-- [ ] Implement Feed Removal
+- [x] Implement Feed Removal in MVP
+- [ ] Implement Batch Feed load
 
 ## Structure
 

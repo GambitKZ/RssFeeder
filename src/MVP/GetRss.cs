@@ -74,6 +74,8 @@ public static class GetRss
             }
         }
 
+        items.Reverse();
+
         // Put a html of the function
         SyndicationFeed feed = new SyndicationFeed("Gambit's Personal RSS",
                 "This is my test feed", new Uri("http://SomeURI"));
