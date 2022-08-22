@@ -5,7 +5,7 @@ namespace RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
 
 public class CreateFeedItemsCommand : IRequest<string>
 {
-    public IList<IFeedItem> ListOfFeeds { get; set; }
+    public IList<SharedKernel.Models.FeedItem> ListOfFeeds { get; set; }
 }
 
 public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemsCommand, string>

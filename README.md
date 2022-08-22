@@ -1,12 +1,11 @@
 # Summary
 
-I just wanted an App that build RSS for me.
+I have an E-book that don't syncronize with the PC's browser, bot works fine with the RSS.
+So I will use this feature, saving necessary articles in Azure Table to read them from the E-book.
 
 Build on "https://github.com/jasontaylordev/CleanArchitecture" Template.
 
-Plan to use the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCore" idea.
-
-First - implement MVP to understand what do I want.
+Also used the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCore" idea.
 
 ## Plan
 
@@ -17,7 +16,20 @@ First - implement MVP to understand what do I want.
 - [x] Create "SharedCore" and move into it common things
 - [x] Update "Application"
 - [x] Implement Feed Removal in MVP
-- [ ] Implement Batch Feed load
+- [x] Implement Batch Feed load
+- [x] Implement Batch Feed removal
+- [ ] Remove MVP and Deploy to Azure
+- [ ] Add Fluent Validation
+- [ ] Get reed of Feed Object from Shared Kernel(?)
+- [ ] Create DTO for Function/Infrastructure
+- [ ] Work with Behaviours
+- [ ] Add Unit Test
+- [ ] Add support of different RSS themes
+- [ ] Add Table for keeping all avialable themes, and logic to work with them
+- [ ] Get rid of Template's code
+- [ ] Allow to convert html to pdf and provide the links to them in RSS (https://www.syncfusion.com/blogs/post/html-to-pdf-conversion-in-csharp.aspx)
+- [ ] Feed Removal need to clear the PDF file
+
 
 ## Structure
 

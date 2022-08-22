@@ -1,14 +1,14 @@
 ﻿namespace RssFeeder.SharedKernel.Interfaces;
 
-public interface IRepositoryBase<T> where T : class//, IFeedItem
+public interface IRepositoryBase<T> where T : class
 {
     void Add(T entity);
 
     void AddRange(IEnumerable<T> entities);
 
-    Task DeleteAsync(T entity, CancellationToken cancellationToken = default);
+    void Delete(string id);
 
-    Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default);
+    void DeleteRange(IEnumerable<string> ids);
 
     // Save the Changes
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

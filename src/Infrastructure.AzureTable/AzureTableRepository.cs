@@ -8,6 +8,7 @@ namespace RssFeeder.Infrastructure.AzureTable;
 
 public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeedItem
 {
+    private const string MentoringPartitionKey = "MentoringProgram";
     private readonly IMapper _mapper;
     private List<TableTransactionAction> _transactionLog = new();
 
@@ -23,31 +24,64 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
     public void Add(T entity)
     {
-        AddTransaction(entity, TableTransactionActionType.Add);
+        var feedObject = new FeedItemAzureTableObject
+        {
+            PartitionKey = MentoringPartitionKey,
+            RowKey = Guid.NewGuid().ToString(),
+            Title = entity.Title,
+            Content = entity.Content,
+            Link = entity.Link
+        };
+
+        AddTransaction(feedObject, TableTransactionActionType.Add);
     }
 
     public void AddRange(IEnumerable<T> entities)
     {
         foreach (var item in entities)
         {
-            AddTransaction(item, TableTransactionActionType.Add);
+            var feedObject = new FeedItemAzureTableObject
+            {
+                PartitionKey = MentoringPartitionKey,
+                RowKey = Guid.NewGuid().ToString(),
+                Title = item.Title,
+                Content = item.Content,
+                Link = item.Link
+            };
+
+            AddTransaction(feedObject, TableTransactionActionType.Add);
         }
     }
 
-    public Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
+    public void Delete(string id)
     {
-        throw new NotImplementedException();
+        var entity = new FeedItemAzureTableObject
+        {
+            PartitionKey = MentoringPartitionKey,
+            RowKey = id,
+        };
+
+        AddTransaction(entity, TableTransactionActionType.Delete);
     }
 
-    public Task DeleteRangeAsync(IEnumerable<T> entities, CancellationToken cancellationToken = default)
+    public void DeleteRange(IEnumerable<string> ids)
     {
-        throw new NotImplementedException();
+        foreach (var id in ids)
+        {
+            var entity = new FeedItemAzureTableObject
+            {
+                PartitionKey = MentoringPartitionKey,
+                RowKey = id,
+            };
+
+            AddTransaction(entity, TableTransactionActionType.Delete);
+        }
     }
 
     public async Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default)
     {
         var items = TableClient.QueryAsync<FeedItemAzureTableObject>(
-            filter: "PartitionKey eq 'MentoringProgram'",
+            filter: $"PartitionKey eq '{MentoringPartitionKey}'",
             cancellationToken: cancellationToken);
 
         List<IFeedItem> feeds = new();
@@ -73,18 +107,9 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
         return count;
     }
 
-    private void AddTransaction(T item, TableTransactionActionType transactionType)
+    private void AddTransaction(FeedItemAzureTableObject item, TableTransactionActionType transactionType)
     {
-        var feedObject = new FeedItemAzureTableObject
-        {
-            PartitionKey = "MentoringProgram",
-            RowKey = Guid.NewGuid().ToString(),
-            Title = item.Title,
-            Content = item.Content,
-            Link = item.Link
-        };
-
-        var action = new TableTransactionAction(transactionType, feedObject);
+        var action = new TableTransactionAction(transactionType, item);
         _transactionLog.Add(action);
     }
 }

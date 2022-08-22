@@ -8,31 +8,30 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
-using RssFeeder.SharedKernel.Models;
+using RssFeeder.Application.FeedItem.Commands.DeleteFeedItems;
 
 namespace RssFeeder.Web.AzureFunction;
 
-public class UploadFeedBatch
+public class DeleteFeedItems
 {
     private readonly IMediator _mediator;
 
-    public UploadFeedBatch(IMediator mediator)
+    public DeleteFeedItems(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    [FunctionName("UploadFeedBatch")]
+    [FunctionName("DeleteFeedItems")]
     public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
+        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
         ILogger log)
     {
         string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        var feedItems = JsonConvert.DeserializeObject<List<FeedItem>>(requestBody);
+        dynamic feedIds = JsonConvert.DeserializeObject<List<string>>(requestBody);
 
-        var status = await _mediator.Send(new CreateFeedItemsCommand()
+        var status = await _mediator.Send(new DeleteFeedItemsCommand()
         {
-            ListOfFeeds = feedItems
+            ListOfFeedId = feedIds
         });
 
         return new OkResult();
