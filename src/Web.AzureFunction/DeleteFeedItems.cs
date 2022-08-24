@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RssFeeder.Application.FeedItem.Commands.DeleteFeedItems;
 
@@ -23,13 +22,12 @@ public class DeleteFeedItems
 
     [FunctionName("DeleteFeedItems")]
     public async Task<IActionResult> Run(
-        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
-        ILogger log)
+        [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req)
     {
         string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
         dynamic feedIds = JsonConvert.DeserializeObject<List<string>>(requestBody);
 
-        var status = await _mediator.Send(new DeleteFeedItemsCommand()
+        await _mediator.Send(new DeleteFeedItemsCommand()
         {
             ListOfFeedId = feedIds
         });

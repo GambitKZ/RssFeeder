@@ -18,7 +18,7 @@ Also used the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCo
 - [x] Implement Feed Removal in MVP
 - [x] Implement Batch Feed load
 - [x] Implement Batch Feed removal
-- [ ] Remove MVP and Deploy to Azure
+- [x] Remove MVP and Deploy to Azure
 - [ ] Add Fluent Validation
 - [ ] Get reed of Feed Object from Shared Kernel(?)
 - [ ] Create DTO for Function/Infrastructure
@@ -27,7 +27,10 @@ Also used the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCo
 - [ ] Add support of different RSS themes
 - [ ] Add Table for keeping all avialable themes, and logic to work with them
 - [ ] Get rid of Template's code
-- [ ] Allow to convert html to pdf and provide the links to them in RSS (https://www.syncfusion.com/blogs/post/html-to-pdf-conversion-in-csharp.aspx)
+- [ ] Handle exception when failed to remove
+- [ ] Add time of the Insertion for the order
+- [ ] Handle the Duplication by using the Link as a "Row Key"
+- [ ] Allow to convert html to pdf and provide the links to them in RSS (<https://www.syncfusion.com/blogs/post/html-to-pdf-conversion-in-csharp.aspx>)
 - [ ] Feed Removal need to clear the PDF file
 
 
