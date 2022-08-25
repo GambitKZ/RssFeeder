@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
 using RssFeeder.SharedKernel.Models;
@@ -25,16 +26,26 @@ public class UploadFeedBatch
     [FunctionName("UploadFeedBatch")]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
-        ILogger log)
+        CancellationToken cancellationToken)
     {
         string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
         var feedItems = JsonConvert.DeserializeObject<List<FeedItem>>(requestBody);
 
-        var status = await _mediator.Send(new CreateFeedItemsCommand()
+        // Either make an attribute with Exception handler, or update "Catch"
+        // Looks like Attributes/Middlewhere are possible only in "Isolated" function
+        try
         {
-            ListOfFeeds = feedItems
-        });
+            await _mediator.Send(new CreateFeedItemsCommand()
+            {
+                ListOfFeeds = feedItems
+            },
+            cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            var test = ex;
+        }
 
-        return new OkResult();
+        return new NoContentResult();
     }
 }

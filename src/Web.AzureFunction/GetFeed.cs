@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -21,10 +22,11 @@ public class GetFeed
     [FunctionName("GetFeed")]
     public async Task<IActionResult> Run(
         [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
+        CancellationToken cancellationToken,
         ILogger log)
     {
         //var test = await _mediator.Send(new CreateTodoListCommand());
-        var rssFeed = await _mediator.Send(new GetRssFeedQuery());
+        var rssFeed = await _mediator.Send(new GetRssFeedQuery(), cancellationToken);
 
         //log.LogInformation("C# HTTP trigger function processed a request.");
 
