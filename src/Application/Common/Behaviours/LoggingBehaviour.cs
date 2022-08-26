@@ -1,11 +1,11 @@
-﻿using MediatR.Pipeline;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using RssFeeder.Application.Common.Interfaces;
 
 namespace RssFeeder.Application.Common.Behaviours;
 
 // Triggered with each hit on Mediator
-public class LoggingBehaviour<TRequest> : IRequestPreProcessor<TRequest> where TRequest : notnull
+// Commented "IRequestPreProcessor" because it gives an errors for "Isolated Function"
+public class LoggingBehaviour<TRequest> //: IRequestPreProcessor<TRequest> where TRequest : notnull
 {
     private readonly ILogger _logger;
     private readonly ICurrentUserService _currentUserService;

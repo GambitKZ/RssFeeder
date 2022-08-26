@@ -20,7 +20,7 @@ Also used the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCo
 - [x] Implement Batch Feed removal
 - [x] Remove MVP and Deploy to Azure
 - [ ] Add Fluent Validation
-- [ ] Understand Isolated Process of the Azure Function
+- [x] Understand Isolated Process of the Azure Function
 - [ ] Get reed of Feed Object from Shared Kernel(?)
 - [ ] Create DTO for Function/Infrastructure
 - [ ] Work with Behaviors
