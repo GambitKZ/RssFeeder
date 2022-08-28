@@ -11,16 +11,20 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
 using RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
 using RssFeeder.SharedKernel.Models;
+using RssFeeder.Web.AzureFunction.Handlers;
 
 namespace RssFeeder.Web.AzureFunction;
 
 public class UploadFeedBatch
 {
     private readonly IMediator _mediator;
+    private readonly ExceptionHandler _exceptionHandler;
 
     public UploadFeedBatch(IMediator mediator)
     {
         _mediator = mediator;
+        //_exceptionHandler = exceptionHandler;
+        _exceptionHandler = new ExceptionHandler();
     }
 
     [FunctionName("UploadFeedBatch")]
@@ -43,7 +47,7 @@ public class UploadFeedBatch
         }
         catch (Exception ex)
         {
-            var test = ex;
+            return _exceptionHandler.HandleException(ex);
         }
 
         return new NoContentResult();

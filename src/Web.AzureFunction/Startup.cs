@@ -16,5 +16,7 @@ public class Startup : FunctionsStartup
 
         // Add Application's ConfigureServices so Mediator will work
         builder.Services.AddApplicationServices();
+
+        //builder.Services.AddScoped(typeof(ExceptionHandler), ExceptionHandler);
     }
 }
