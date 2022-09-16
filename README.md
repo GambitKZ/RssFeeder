@@ -19,14 +19,14 @@ Also used the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCo
 - [x] Implement Batch Feed load
 - [x] Implement Batch Feed removal
 - [x] Remove MVP and Deploy to Azure
-- [ ] Add Fluent Validation
+- [x] Add Fluent Validation
 - [x] Understand Isolated Process of the Azure Function
-- [ ] Get reed of Feed Object from Shared Kernel(?)
+- [ ] Get rid of Feed Object from Shared Kernel(?)
 - [ ] Create DTO for Function/Infrastructure
 - [ ] Work with Behaviors
 - [ ] Add Unit Test
-- [ ] Add support of different RSS themes
-- [ ] Add Table for keeping all available themes, and logic to work with them
+- [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
+- [ ] Add support of different RSS themes (Mentoring/Info)
 - [ ] Get rid of Template's code
 - [ ] Handle exception when failed to remove
 - [ ] Add time of the Insertion for the order

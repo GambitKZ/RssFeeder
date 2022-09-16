@@ -34,12 +34,6 @@ public class ExceptionHandler
             return contextResult;
         }
 
-        //if (!context.ModelState.IsValid)
-        //{
-        //    HandleInvalidModelStateException(context);
-        //    return;
-        //}
-
         contextResult.Content = "Request has failed to process";
         contextResult.StatusCode = 500;
 

@@ -10,7 +10,6 @@ public interface IRepositoryBase<T> where T : class
 
     void DeleteRange(IEnumerable<string> ids);
 
-    // Save the Changes
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default);

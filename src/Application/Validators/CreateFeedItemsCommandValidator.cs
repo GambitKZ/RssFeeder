@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using RssFeeder.Application.Validators;
+using RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
 
-namespace RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
+namespace RssFeeder.Application.Validators;
 
 public class CreateFeedItemsCommandValidator : AbstractValidator<CreateFeedItemsCommand>
 {

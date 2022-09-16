@@ -2,6 +2,7 @@
 
 namespace RssFeeder.Domain.Common;
 
+// TODO: Remove this
 public abstract class BaseEntity
 {
     public int Id { get; set; }

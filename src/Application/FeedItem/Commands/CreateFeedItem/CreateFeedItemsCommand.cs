@@ -1,11 +1,12 @@
 ﻿using MediatR;
+using RssFeeder.Domain.Entities;
 using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
 
 public class CreateFeedItemsCommand : IRequest<string>
 {
-    public IList<SharedKernel.Models.FeedItem> ListOfFeeds { get; set; }
+    public IList<FeedItemObject> ListOfFeeds { get; set; }
 }
 
 public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemsCommand, string>
@@ -19,8 +20,8 @@ public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemsComma
 
     public async Task<string> Handle(CreateFeedItemsCommand request, CancellationToken cancellationToken)
     {
-        // add to Context and Save
         _repository.AddRange(request.ListOfFeeds);
+
         await _repository.SaveChangesAsync(cancellationToken);
 
         // Notify that it was done

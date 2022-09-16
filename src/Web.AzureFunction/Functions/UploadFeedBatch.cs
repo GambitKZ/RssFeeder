@@ -10,21 +10,20 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
 using RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
-using RssFeeder.SharedKernel.Models;
+using RssFeeder.Domain.Entities;
 using RssFeeder.Web.AzureFunction.Handlers;
 
-namespace RssFeeder.Web.AzureFunction;
+namespace RssFeeder.Web.AzureFunction.Functions;
 
 public class UploadFeedBatch
 {
     private readonly IMediator _mediator;
     private readonly ExceptionHandler _exceptionHandler;
 
-    public UploadFeedBatch(IMediator mediator)
+    public UploadFeedBatch(IMediator mediator, ExceptionHandler exceptionHandler)
     {
         _mediator = mediator;
-        //_exceptionHandler = exceptionHandler;
-        _exceptionHandler = new ExceptionHandler();
+        _exceptionHandler = exceptionHandler;
     }
 
     [FunctionName("UploadFeedBatch")]
@@ -33,12 +32,12 @@ public class UploadFeedBatch
         CancellationToken cancellationToken)
     {
         string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        var feedItems = JsonConvert.DeserializeObject<List<FeedItem>>(requestBody);
 
-        // Either make an attribute with Exception handler, or update "Catch"
-        // Looks like Attributes/Middlewhere are possible only in "Isolated" function
+        // Looks like Attributes/Middleware are possible only in "Isolated" function
         try
         {
+            var feedItems = JsonConvert.DeserializeObject<List<FeedItemObject>>(requestBody);
+
             await _mediator.Send(new CreateFeedItemsCommand()
             {
                 ListOfFeeds = feedItems

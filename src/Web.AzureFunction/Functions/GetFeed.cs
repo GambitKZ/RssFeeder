@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using RssFeeder.Application.RssFeed.Queries.GetRss;
 
-namespace RssFeeder.Web.AzureFunction;
+namespace RssFeeder.Web.AzureFunction.Functions;
 
 public class GetFeed
 {

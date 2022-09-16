@@ -2,13 +2,14 @@
 using Azure.Data.Tables;
 using RssFeeder.Infrastructure.AzureTable.Models;
 using RssFeeder.SharedKernel.Interfaces;
-using RssFeeder.SharedKernel.Models;
 
 namespace RssFeeder.Infrastructure.AzureTable;
 
 public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeedItem
 {
+    // TODO: Move from constant to Property
     private const string MentoringPartitionKey = "MentoringProgram";
+
     private readonly IMapper _mapper;
     private List<TableTransactionAction> _transactionLog = new();
 
@@ -16,6 +17,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     {
         var tableServiceClient = new TableServiceClient(connectionString);
 
+        // TODO: Pass the Table name not in Constructor?
         TableClient = tableServiceClient.GetTableClient(tableName: tableName);
         _mapper = mapper;
     }
@@ -88,7 +90,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
         await foreach (var item in items)
         {
-            feeds.Add(_mapper.Map<FeedItemAzureTableObject, FeedItem>(item));
+            feeds.Add(_mapper.Map<FeedItemAzureTableObject, FeedItemDto>(item));
         }
 
         return (IEnumerable<T>)feeds;

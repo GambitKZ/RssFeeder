@@ -1,11 +1,12 @@
-﻿using RssFeeder.Domain.Common;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using RssFeeder.Domain.Common;
 
 namespace MediatR;
 
+// TODO: Remove this
 public static class MediatorExtensions
 {
-    public static async Task DispatchDomainEvents(this IMediator mediator, DbContext context) 
+    public static async Task DispatchDomainEvents(this IMediator mediator, DbContext context)
     {
         var entities = context.ChangeTracker
             .Entries<BaseEntity>()
