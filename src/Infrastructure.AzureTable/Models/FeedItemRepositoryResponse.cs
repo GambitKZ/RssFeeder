@@ -2,7 +2,7 @@
 
 namespace RssFeeder.Infrastructure.AzureTable.Models;
 
-public class FeedItemDto : IFeedItem
+public class FeedItemRepositoryResponse : IFeedItem
 {
     public string? Id { get; set; }
     public string? Title { get; set; }

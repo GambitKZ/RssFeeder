@@ -7,7 +7,7 @@ public class FeedMapperProfile : Profile
 {
     public FeedMapperProfile()
     {
-        CreateMap<FeedItemAzureTableObject, FeedItemDto>()
+        CreateMap<FeedItemAzureTableDto, FeedItemRepositoryResponse>()
                   .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.RowKey))
                   .ForMember(dest => dest.Timestamp, opt => opt.MapFrom(src => src.Timestamp));
     }

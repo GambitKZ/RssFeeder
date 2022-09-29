@@ -5,7 +5,7 @@ using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Infrastructure.AzureTable.Models;
 
-public class FeedItemAzureTableObject : IFeedItem, ITableEntity
+public class FeedItemAzureTableDto : IFeedItem, ITableEntity
 {
     public string RowKey { get; set; } = default!;
 

@@ -21,7 +21,7 @@ Also used the "https://github.com/ardalis/CleanArchitecture/" for it's "SharedCo
 - [x] Remove MVP and Deploy to Azure
 - [x] Add Fluent Validation
 - [x] Understand Isolated Process of the Azure Function
-- [ ] Get rid of Feed Object from Shared Kernel(?)
+- [x] Get rid of Feed Object from Shared Kernel(?)
 - [ ] Create DTO for Function/Infrastructure
 - [ ] Work with Behaviors
 - [ ] Add Unit Test

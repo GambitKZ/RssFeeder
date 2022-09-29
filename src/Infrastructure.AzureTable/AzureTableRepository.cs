@@ -18,7 +18,9 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
         var tableServiceClient = new TableServiceClient(connectionString);
 
         // TODO: Pass the Table name not in Constructor?
-        TableClient = tableServiceClient.GetTableClient(tableName: tableName);
+        tableServiceClient.CreateTableIfNotExists(tableName);
+        TableClient = tableServiceClient.GetTableClient(tableName);
+
         _mapper = mapper;
     }
 
@@ -26,7 +28,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
     public void Add(T entity)
     {
-        var feedObject = new FeedItemAzureTableObject
+        var feedObject = new FeedItemAzureTableDto
         {
             PartitionKey = MentoringPartitionKey,
             RowKey = Guid.NewGuid().ToString(),
@@ -42,22 +44,13 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     {
         foreach (var item in entities)
         {
-            var feedObject = new FeedItemAzureTableObject
-            {
-                PartitionKey = MentoringPartitionKey,
-                RowKey = Guid.NewGuid().ToString(),
-                Title = item.Title,
-                Content = item.Content,
-                Link = item.Link
-            };
-
-            AddTransaction(feedObject, TableTransactionActionType.Add);
+            Add(item);
         }
     }
 
     public void Delete(string id)
     {
-        var entity = new FeedItemAzureTableObject
+        var entity = new FeedItemAzureTableDto
         {
             PartitionKey = MentoringPartitionKey,
             RowKey = id,
@@ -70,7 +63,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     {
         foreach (var id in ids)
         {
-            var entity = new FeedItemAzureTableObject
+            var entity = new FeedItemAzureTableDto
             {
                 PartitionKey = MentoringPartitionKey,
                 RowKey = id,
@@ -80,9 +73,9 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
         }
     }
 
-    public async Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        var items = TableClient.QueryAsync<FeedItemAzureTableObject>(
+        var items = TableClient.QueryAsync<FeedItemAzureTableDto>(
             filter: $"PartitionKey eq '{MentoringPartitionKey}'",
             cancellationToken: cancellationToken);
 
@@ -90,7 +83,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
         await foreach (var item in items)
         {
-            feeds.Add(_mapper.Map<FeedItemAzureTableObject, FeedItemDto>(item));
+            feeds.Add(_mapper.Map<FeedItemAzureTableDto, FeedItemRepositoryResponse>(item));
         }
 
         return (IEnumerable<T>)feeds;
@@ -109,7 +102,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
         return count;
     }
 
-    private void AddTransaction(FeedItemAzureTableObject item, TableTransactionActionType transactionType)
+    private void AddTransaction(FeedItemAzureTableDto item, TableTransactionActionType transactionType)
     {
         var action = new TableTransactionAction(transactionType, item);
         _transactionLog.Add(action);

@@ -12,5 +12,5 @@ public interface IRepositoryBase<T> where T : class
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
-    Task<IEnumerable<T>> GetAll(CancellationToken cancellationToken = default);
+    Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default);
 }

@@ -20,7 +20,7 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
 
     public async Task<string> Handle(GetRssFeedQuery request, CancellationToken cancellationToken)
     {
-        var listOfFeeds = await _repository.GetAll(cancellationToken);
+        var listOfFeeds = await _repository.GetAllAsync(cancellationToken);
 
         List<SyndicationItem> items = new();
         DateTimeOffset? latestDate = null;

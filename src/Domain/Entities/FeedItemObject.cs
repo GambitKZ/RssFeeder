@@ -2,6 +2,7 @@
 
 namespace RssFeeder.Domain.Entities;
 
+// TODO - remove from the Domain!!!
 public class FeedItemObject : IFeedItem
 {
     public string? Id { get; set; }

@@ -34,6 +34,7 @@ public class UploadFeedBatch
         string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
         // Looks like Attributes/Middleware are possible only in "Isolated" function
+        // So use Exception
         try
         {
             var feedItems = JsonConvert.DeserializeObject<List<FeedItemObject>>(requestBody);

@@ -25,20 +25,7 @@ public class GetFeed
         CancellationToken cancellationToken,
         ILogger log)
     {
-        //var test = await _mediator.Send(new CreateTodoListCommand());
         var rssFeed = await _mediator.Send(new GetRssFeedQuery(), cancellationToken);
-
-        //log.LogInformation("C# HTTP trigger function processed a request.");
-
-        //string name = req.Query["name"];
-
-        //string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        //dynamic data = JsonConvert.DeserializeObject(requestBody);
-        //name = name ?? data?.name;
-
-        //string responseMessage = string.IsNullOrEmpty(name)
-        //    ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-        //    : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
         // Issue of Function https://github.com/Azure/azure-functions-host/issues/2896
         return new ContentResult { Content = rssFeed, ContentType = "application/xml" };
