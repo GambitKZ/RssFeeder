@@ -8,6 +8,6 @@ public class CreateFeedItemsCommandValidator : AbstractValidator<CreateFeedItems
     public CreateFeedItemsCommandValidator()
     {
         RuleFor(list => list.ListOfFeeds).Must(x => x.Count > 0).WithMessage("List of Feeds should not be Empty");
-        RuleForEach(list => list.ListOfFeeds).SetValidator(new FeedItemValidator());
+        RuleForEach(list => list.ListOfFeeds).SetValidator(new UploadFeedItemValidator());
     }
 }

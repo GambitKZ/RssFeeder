@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Azure.Data.Tables;
+using RssFeeder.Application.Common.Models;
 using RssFeeder.Infrastructure.AzureTable.Models;
 using RssFeeder.SharedKernel.Interfaces;
 
@@ -11,7 +12,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     private const string MentoringPartitionKey = "MentoringProgram";
 
     private readonly IMapper _mapper;
-    private List<TableTransactionAction> _transactionLog = new();
+    private List<TableTransactionAction> transactionLog = new();
 
     public AzureTableRepository(string connectionString, string tableName, IMapper mapper)
     {
@@ -83,7 +84,7 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
         await foreach (var item in items)
         {
-            feeds.Add(_mapper.Map<FeedItemAzureTableDto, FeedItemRepositoryResponse>(item));
+            feeds.Add(_mapper.Map<FeedItemAzureTableDto, FeedItemRepositoryDto>(item));
         }
 
         return (IEnumerable<T>)feeds;
@@ -91,12 +92,12 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var count = _transactionLog.Count;
+        var count = transactionLog.Count;
 
         if (count > 0)
         {
-            await TableClient.SubmitTransactionAsync(_transactionLog, cancellationToken);
-            _transactionLog.Clear();
+            await TableClient.SubmitTransactionAsync(transactionLog, cancellationToken);
+            transactionLog.Clear();
         }
 
         return count;
@@ -105,6 +106,6 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     private void AddTransaction(FeedItemAzureTableDto item, TableTransactionActionType transactionType)
     {
         var action = new TableTransactionAction(transactionType, item);
-        _transactionLog.Add(action);
+        transactionLog.Add(action);
     }
 }

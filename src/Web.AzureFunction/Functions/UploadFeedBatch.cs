@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Newtonsoft.Json;
+using RssFeeder.Application.Common.Models;
 using RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
-using RssFeeder.Domain.Entities;
 using RssFeeder.Web.AzureFunction.Handlers;
 
 namespace RssFeeder.Web.AzureFunction.Functions;
@@ -37,13 +37,10 @@ public class UploadFeedBatch
         // So use Exception
         try
         {
-            var feedItems = JsonConvert.DeserializeObject<List<FeedItemObject>>(requestBody);
+            var feedItems = JsonConvert.DeserializeObject<List<UploadFeedItem>>(requestBody);
 
-            await _mediator.Send(new CreateFeedItemsCommand()
-            {
-                ListOfFeeds = feedItems
-            },
-            cancellationToken);
+            await _mediator.Send(new CreateFeedItemsCommand(feedItems),
+                cancellationToken);
         }
         catch (Exception ex)
         {

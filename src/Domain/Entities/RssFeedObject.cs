@@ -1,4 +1,6 @@
-﻿namespace RssFeeder.Domain.Entities;
+﻿using RssFeeder.SharedKernel.Interfaces;
+
+namespace RssFeeder.Domain.Entities;
 
 public class RssFeedObject
 {
@@ -12,5 +14,5 @@ public class RssFeedObject
 
     public string[] FeedCategories { get; set; }
 
-    public List<FeedItemObject> Items { get; } = new List<FeedItemObject>();
+    public List<IFeedItem> Items { get; } = new();
 }

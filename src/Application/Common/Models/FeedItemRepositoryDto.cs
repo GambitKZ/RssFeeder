@@ -1,8 +1,8 @@
 ﻿using RssFeeder.SharedKernel.Interfaces;
 
-namespace RssFeeder.Infrastructure.AzureTable.Models;
+namespace RssFeeder.Application.Common.Models;
 
-public class FeedItemRepositoryResponse : IFeedItem
+public class FeedItemRepositoryDto : IFeedItem
 {
     public string? Id { get; set; }
     public string? Title { get; set; }
