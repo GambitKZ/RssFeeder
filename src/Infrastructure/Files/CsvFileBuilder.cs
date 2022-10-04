@@ -1,8 +1,7 @@
 ﻿using System.Globalization;
+using CsvHelper;
 using RssFeeder.Application.Common.Interfaces;
 using RssFeeder.Application.TodoLists.Queries.ExportTodos;
-using RssFeeder.Infrastructure.Files.Maps;
-using CsvHelper;
 
 namespace RssFeeder.Infrastructure.Files;
 
@@ -15,7 +14,7 @@ public class CsvFileBuilder : ICsvFileBuilder
         {
             using var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture);
 
-            csvWriter.Configuration.RegisterClassMap<TodoItemRecordMap>();
+            //csvWriter.Configuration.RegisterClassMap<TodoItemRecordMap>();
             csvWriter.WriteRecords(records);
         }
 

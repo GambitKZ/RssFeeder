@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
-    <RootNamespace>RssFeeder.Infrastructure.AzureTable.IntegrationTests</RootNamespace>
-    <AssemblyName>RssFeeder.Infrastructure.AzureTable.IntegrationTests</AssemblyName>
+    <RootNamespace>RssFeeder.Infrastructure.AzureTable.UnitTests</RootNamespace>
+    <AssemblyName>RssFeeder.Infrastructure.AzureTable.UnitTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +15,10 @@
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />
     <PackageReference Include="MSTest.TestFramework" Version="2.2.8" />
     <PackageReference Include="coverlet.collector" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Infrastructure.AzureTable\Infrastructure.AzureTable.csproj" />
   </ItemGroup>
 
 </Project>

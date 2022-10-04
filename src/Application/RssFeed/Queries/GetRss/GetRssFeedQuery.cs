@@ -27,6 +27,7 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
         foreach (var item in listOfFeeds)
         {
             // need to map RowKey to ID
+            // TODO: need to use Mapper
             items.Add(new SyndicationItem(
                 item.Title,
                 item.Content,
@@ -43,6 +44,7 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
         // Otherwise I receive them in wrong order
         items.Reverse();
 
+        // TODO: Sounds like Business logic - move to Domain
         SyndicationFeed feed = new SyndicationFeed("Gambit's Personal RSS",
                 "This is my test feed", new Uri("http://SomeURI"));
         feed.Authors.Add(new SyndicationPerson("rusnigdrag@gmail.com"));
