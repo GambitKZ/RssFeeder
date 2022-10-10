@@ -36,11 +36,8 @@ public class DeleteFeedItems
         {
             dynamic feedIds = JsonConvert.DeserializeObject<List<string>>(requestBody);
 
-            await _mediator.Send(new DeleteFeedItemsCommand()
-            {
-                ListOfFeedId = feedIds
-            },
-           cancellationToken);
+            await _mediator.Send(new DeleteFeedItemsCommand(feedIds),
+                                                cancellationToken);
         }
         catch (Exception ex)
         {

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RssFeeder.Application.Common.Models;
 
 namespace RssFeeder.Application.Common.Mappings.Tests;
 
@@ -24,8 +25,22 @@ public class UploadToRepositoryFeedItemMapperProfileTests
     }
 
     [TestMethod()]
-    public void UploadToRepositoryFeedItemMapperProfileTest()
+    public void Mapping_WithCorrectData_CorrectlyMapped()
     {
-        throw new NotImplementedException();
+        var feedItem = new UploadFeedItem
+        {
+            Content = "Content1",
+            Link = "Link1",
+            Title = "Title1"
+        };
+
+        var mappedObject = _mapper.Map<UploadFeedItem, FeedItemRepositoryDto>(feedItem);
+
+        Assert.IsNotNull(mappedObject);
+        Assert.AreEqual(feedItem.Content, mappedObject.Content);
+        Assert.AreEqual(feedItem.Title, mappedObject.Title);
+        Assert.AreEqual(feedItem.Link, mappedObject.Link);
+        Assert.AreEqual(feedItem.Link, mappedObject.Id);
+        Assert.IsNotNull(mappedObject.Timestamp);
     }
 }

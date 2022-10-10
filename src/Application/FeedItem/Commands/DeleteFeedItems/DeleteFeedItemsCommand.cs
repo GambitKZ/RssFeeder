@@ -5,7 +5,12 @@ namespace RssFeeder.Application.FeedItem.Commands.DeleteFeedItems;
 
 public class DeleteFeedItemsCommand : IRequest<string>
 {
-    public IList<string> ListOfFeedId { get; set; }
+    public DeleteFeedItemsCommand(IList<string> listOfFeedId)
+    {
+        ListOfFeedId = listOfFeedId;
+    }
+
+    public IList<string> ListOfFeedId { get; }
 }
 
 public class DeleteFeedItemsCommandHandler : IRequestHandler<DeleteFeedItemsCommand, string>

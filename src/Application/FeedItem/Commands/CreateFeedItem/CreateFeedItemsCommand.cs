@@ -28,8 +28,7 @@ public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemsComma
 
     public async Task<string> Handle(CreateFeedItemsCommand request, CancellationToken cancellationToken)
     {
-        var feedItems = _mapper.Map<IList<UploadFeedItem>,
-                                    IEnumerable<FeedItemRepositoryDto>>(request.ListOfFeeds);
+        IEnumerable<FeedItemRepositoryDto> feedItems = GetFeedItemsFromRequest(request);
 
         _repository.AddRange(feedItems);
 
@@ -39,5 +38,11 @@ public class CreateFeedItemCommandHandler : IRequestHandler<CreateFeedItemsComma
         //feed.AddDomainEvent(new FeedItemSavedEvent(feed));
 
         return "Feed was saved";
+    }
+
+    private IEnumerable<FeedItemRepositoryDto> GetFeedItemsFromRequest(CreateFeedItemsCommand request)
+    {
+        return _mapper.Map<IList<UploadFeedItem>,
+                                            IEnumerable<FeedItemRepositoryDto>>(request.ListOfFeeds);
     }
 }
