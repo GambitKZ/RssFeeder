@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using RssFeeder.Application.Common.Models;
+using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Application.Common.Mappings;
 
