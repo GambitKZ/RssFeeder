@@ -7,14 +7,16 @@ public class UploadFeedItemValidator : AbstractValidator<UploadFeedItem>
 {
     public UploadFeedItemValidator()
     {
+        var message = "{PropertyName} of the Feed Item should Not be Empty or Null";
+
         RuleFor(x => x.Title).NotNull()
                                  .NotEmpty()
-                                 .WithMessage("Title of the Feed Item should Not be Empty or Null");
+                                 .WithMessage(message);
         RuleFor(x => x.Content).NotNull()
                                    .NotEmpty()
-                                   .WithMessage("Content of the Feed Item should Not be Empty or Null");
+                                   .WithMessage(message);
         RuleFor(x => x.Link).NotNull()
                                 .NotEmpty()
-                                .WithMessage("Link of the Feed Item should Not be Empty or Null");
+                                .WithMessage(message);
     }
 }

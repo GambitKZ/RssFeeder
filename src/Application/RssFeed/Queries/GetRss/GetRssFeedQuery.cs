@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using RssFeeder.Domain.Entities;
 using RssFeeder.Domain.Services;
 using RssFeeder.SharedKernel.Interfaces;
 
@@ -20,6 +21,16 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
     {
         var listOfFeeds = await _repository.GetAllAsync(cancellationToken);
 
-        return RssBuilderService.GetRssStringFromItems(listOfFeeds);
+        var header = new FeedHeader()
+        {
+            Title = "Gambit's Personal RSS",
+            AlternateLink = new Uri("http://SomeURI"),
+            Description = "RSS that provide the links to the articles given in mentoring program",
+            Language = "en-us",
+            Authors = new List<string>() { "rusnigdrag@gmail.com" },
+            Categories = new List<string>() { "Mentoring URLs" }
+        };
+
+        return RssBuilderService.GetRssStringFromItems(header, listOfFeeds);
     }
 }
