@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using RssFeeder.Domain.Entities;
+using RssFeeder.Application.Common.Models;
 using RssFeeder.Domain.Services;
 using RssFeeder.SharedKernel.Interfaces;
 

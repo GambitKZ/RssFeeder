@@ -1,9 +1,7 @@
 ﻿using RssFeeder.Domain.Interfaces;
 
-namespace RssFeeder.Domain.Entities;
+namespace RssFeeder.Application.Common.Models;
 
-// TODO: Remove from Domain.
-//       Create one in Test, another in Application
 public class FeedHeader : IFeedHeader
 {
     public string? Title { get; set; }

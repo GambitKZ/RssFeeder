@@ -1,7 +1,6 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Xml;
 using FluentValidation;
-using RssFeeder.Domain.Entities;
 using RssFeeder.Domain.UnitTests;
 
 namespace RssFeeder.Domain.Services.Tests;
@@ -9,12 +8,12 @@ namespace RssFeeder.Domain.Services.Tests;
 [TestClass()]
 public class RssBuilderServiceTests
 {
-    private FeedHeader feedHeader;
+    private TestFeedHeader _feedHeader = null!;
 
     [TestInitialize]
     public void Initialize()
     {
-        feedHeader = new FeedHeader()
+        _feedHeader = new TestFeedHeader()
         {
             Title = "FeedTitle1",
             AlternateLink = new Uri("https://myrss.org"),
@@ -28,13 +27,12 @@ public class RssBuilderServiceTests
     [TestMethod()]
     public void NoObjectsProvided_ReceiveRssWithHeaders()
     {
-        var result = RssBuilderService.GetRssStringFromItems(feedHeader, new List<TestFeed>());
+        var result = RssBuilderService.GetRssStringFromItems(_feedHeader, new List<TestFeed>());
 
-        XmlReader reader = XmlReader.Create(new StringReader(result));
-        SyndicationFeed feed = SyndicationFeed.Load(reader);
-        reader.Close();
+        SyndicationFeed feed = GetSyndycationFeedFromXmlString(result);
 
-        RssHasHeaders(feed);
+        Assert.IsTrue(feed.Title.Text.Length > 0);
+        Assert.IsTrue(feed.Authors.Count > 0);
         Assert.IsFalse(feed.Items.Any());
     }
 
@@ -42,7 +40,7 @@ public class RssBuilderServiceTests
     public void EmptyHeader_ReceiveAnException()
     {
         Assert.ThrowsException<ValidationException>(() => RssBuilderService.GetRssStringFromItems(
-                        new FeedHeader(), new List<TestFeed>()));
+                        new TestFeedHeader(), new List<TestFeed>()));
     }
 
     [TestMethod()]
@@ -57,14 +55,9 @@ public class RssBuilderServiceTests
             Timestamp = DateTimeOffset.Now
         };
 
-        var result = RssBuilderService.GetRssStringFromItems(feedHeader, new List<TestFeed>() { testFeed });
+        var result = RssBuilderService.GetRssStringFromItems(_feedHeader, new List<TestFeed>() { testFeed });
 
-        XmlReader reader = XmlReader.Create(new StringReader(result));
-        SyndicationFeed feed = SyndicationFeed.Load(reader);
-        reader.Close();
-
-        RssHasHeaders(feed);
-        Assert.IsTrue(feed.Items.Any());
+        SyndicationFeed feed = GetSyndycationFeedFromXmlString(result);
 
         var feedItem = feed.Items.First();
         Assert.AreEqual(testFeed.Content, feedItem.Summary.Text);
@@ -72,9 +65,39 @@ public class RssBuilderServiceTests
         Assert.AreEqual(testFeed.Title, feedItem.Title.Text);
     }
 
-    private static void RssHasHeaders(SyndicationFeed feed)
+    [TestMethod()]
+    public void TwoObjectInList_TimestampOfLaterFeed()
     {
-        Assert.IsTrue(feed.Title.Text.Length > 0);
-        Assert.IsTrue(feed.Authors.Count > 0);
+        var testFeed1 = new TestFeed()
+        {
+            Content = "Content1",
+            Id = "Id1",
+            Link = "https://test1.com",
+            Title = "Title1",
+            Timestamp = DateTimeOffset.Now.AddDays(-1)
+        };
+        var testFeed2 = new TestFeed()
+        {
+            Content = "Content2",
+            Id = "Id2",
+            Link = "https://test2.com",
+            Title = "Title2",
+            Timestamp = DateTimeOffset.Now
+        };
+
+        var result = RssBuilderService.GetRssStringFromItems(_feedHeader,
+            new List<TestFeed>() { testFeed1, testFeed2 });
+        SyndicationFeed feed = GetSyndycationFeedFromXmlString(result);
+
+        Assert.AreEqual(2, feed.Items.Count());
+        Assert.AreEqual(testFeed2.Timestamp.ToString(), feed.LastUpdatedTime.ToString());
+    }
+
+    private static SyndicationFeed GetSyndycationFeedFromXmlString(string result)
+    {
+        XmlReader reader = XmlReader.Create(new StringReader(result));
+        SyndicationFeed feed = SyndicationFeed.Load(reader);
+        reader.Close();
+        return feed;
     }
 }
