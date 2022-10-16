@@ -1,8 +1,10 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Text;
 using System.Xml;
+using AutoMapper;
 using FluentValidation;
 using RssFeeder.Domain.Interfaces;
+using RssFeeder.Domain.Mappings;
 using RssFeeder.Domain.Validators;
 using RssFeeder.SharedKernel.Interfaces;
 
@@ -16,7 +18,7 @@ public static class RssBuilderService
     {
         ValidateHeader(feedHeader);
 
-        List<SyndicationItem> items = FormRssFeedItems(listOfFeeds);
+        List<SyndicationItem> items = GetRssItems(listOfFeeds);
         SyndicationFeed feed = FormRssFeed(feedHeader, items);
 
         var settings = new XmlWriterSettings
@@ -37,21 +39,14 @@ public static class RssBuilderService
         return sb.ToString();
     }
 
-    private static List<SyndicationItem> FormRssFeedItems(IEnumerable<IFeedItem> listOfFeeds)
+    private static List<SyndicationItem> GetRssItems(IEnumerable<IFeedItem> listOfFeeds)
     {
-        List<SyndicationItem> items = new();
+        List<SyndicationItem> items = MapFeedItemsToRssItems(listOfFeeds);
+
+        //listOfFeeds (item => item.Timestamp)
 
         foreach (var item in listOfFeeds)
         {
-            // need to map RowKey to ID
-            // TODO: need to use Mapper
-            items.Add(new SyndicationItem(
-                item.Title,
-                item.Content,
-                new Uri(item.Link.Trim('\"')),
-                item.Id,
-                item.Timestamp.Value));
-
             if (!_latestDate.HasValue || item.Timestamp.Value > _latestDate.Value)
             {
                 _latestDate = item.Timestamp.Value;
@@ -61,6 +56,17 @@ public static class RssBuilderService
         // Otherwise I receive them in wrong order
         items.Reverse();
         return items;
+    }
+
+    private static List<SyndicationItem> MapFeedItemsToRssItems(IEnumerable<IFeedItem> listOfFeeds)
+    {
+        var config = new MapperConfiguration(cfg =>
+        {
+            cfg.AddProfile<FeedItemToSyndicationItemMapperProfile>();
+        });
+        var mapper = config.CreateMapper();
+
+        return mapper.Map<List<SyndicationItem>>(listOfFeeds);
     }
 
     private static void ValidateHeader(IFeedHeader feedHeader)

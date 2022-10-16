@@ -17,6 +17,7 @@
       </PackageReference>
       <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.4" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     </ItemGroup>
 
     <ItemGroup>
