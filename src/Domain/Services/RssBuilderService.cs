@@ -45,7 +45,9 @@ public static class RssBuilderService
 
     private static void GetDateOfLastUpdate(IEnumerable<IFeedItem> listOfFeeds)
     {
-        foreach (DateTimeOffset timestamp in listOfFeeds.Where(_ => _.Timestamp.HasValue).Select(_ => _.Timestamp.Value))
+        foreach (DateTimeOffset timestamp in listOfFeeds
+                                                .Where(_ => _.Timestamp.HasValue)
+                                                .Select(_ => _.Timestamp.Value))
         {
             _latestDate ??= timestamp;
             if (timestamp > _latestDate.Value)
@@ -60,12 +62,12 @@ public static class RssBuilderService
         SyndicationFeed feed = new(feedHeader.Title,
                     feedHeader.Description, feedHeader.AlternateLink);
 
-        foreach (string author in feedHeader?.Authors)
+        foreach (string author in feedHeader.Authors!)
         {
             feed.Authors.Add(new SyndicationPerson(author));
         }
 
-        foreach (string category in feedHeader?.Categories)
+        foreach (string category in feedHeader.Categories!)
         {
             feed.Categories.Add(new SyndicationCategory(category));
         }
