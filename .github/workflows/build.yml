@@ -10,7 +10,7 @@ jobs:
     name: Build
     runs-on: windows-latest
     steps:
-      - name: Set up JDK 11
+      - name: Set up JDK 11 # Do we even need this for .Net?
         uses: actions/setup-java@v1
         with:
           java-version: 1.11
@@ -36,13 +36,17 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Install dependencies
+        run: dotnet restore
+      - name: Install .Net Coverage
+        run: dotnet tool install --global dotnet-coverage
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"GambitKZ_RssFeeder" /o:"gambitkz" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build --configuration Release
-          dotnet test --filter TestCategory!~Skip --blame --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=opencover.xml
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"GambitKZ_RssFeeder" /o:"gambitkz" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
+          dotnet build --configuration Release --no-restore
+          dotnet-coverage collect 'dotnet test --filter TestCategory!~Skip' -f xml  -o 'coverage.xml'          
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
