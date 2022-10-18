@@ -10,14 +10,14 @@ using static Testing;
 
 public class CreateTodoListTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireMinimumFields()
     {
         var command = new CreateTodoListCommand();
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<ValidationException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireUniqueTitle()
     {
         await SendAsync(new CreateTodoListCommand
@@ -34,7 +34,7 @@ public class CreateTodoListTests : BaseTestFixture
             SendAsync(command)).Should().ThrowAsync<ValidationException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldCreateTodoList()
     {
         var userId = await RunAsDefaultUserAsync();

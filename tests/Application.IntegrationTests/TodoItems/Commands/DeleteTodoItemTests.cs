@@ -12,7 +12,7 @@ using static Testing;
 
 public class DeleteTodoItemTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireValidTodoItemId()
     {
         var command = new DeleteTodoItemCommand(99);
@@ -21,7 +21,7 @@ public class DeleteTodoItemTests : BaseTestFixture
             SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldDeleteTodoItem()
     {
         var listId = await SendAsync(new CreateTodoListCommand

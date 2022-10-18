@@ -11,7 +11,7 @@ using static Testing;
 
 public class CreateTodoItemTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireMinimumFields()
     {
         var command = new CreateTodoItemCommand();
@@ -20,7 +20,7 @@ public class CreateTodoItemTests : BaseTestFixture
             SendAsync(command)).Should().ThrowAsync<ValidationException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldCreateTodoItem()
     {
         var userId = await RunAsDefaultUserAsync();

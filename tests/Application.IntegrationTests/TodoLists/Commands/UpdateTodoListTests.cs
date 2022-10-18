@@ -11,14 +11,14 @@ using static Testing;
 
 public class UpdateTodoListTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireValidTodoListId()
     {
         var command = new UpdateTodoListCommand { Id = 99, Title = "New Title" };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireUniqueTitle()
     {
         var listId = await SendAsync(new CreateTodoListCommand
@@ -43,7 +43,7 @@ public class UpdateTodoListTests : BaseTestFixture
                 .And.Errors["Title"].Should().Contain("The specified title already exists.");
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldUpdateTodoList()
     {
         var userId = await RunAsDefaultUserAsync();

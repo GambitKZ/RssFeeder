@@ -11,7 +11,7 @@ using Respawn;
 
 namespace RssFeeder.Application.IntegrationTests;
 
-[SetUpFixture]
+//[SetUpFixture]
 public partial class Testing
 {
     private static WebApplicationFactory<Program> _factory = null!;

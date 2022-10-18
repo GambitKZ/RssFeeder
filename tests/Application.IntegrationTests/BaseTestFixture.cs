@@ -4,7 +4,7 @@ namespace RssFeeder.Application.IntegrationTests;
 
 using static Testing;
 
-[TestFixture]
+//[TestFixture]
 public abstract class BaseTestFixture
 {
     [SetUp]

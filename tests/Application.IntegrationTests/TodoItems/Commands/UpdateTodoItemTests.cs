@@ -12,14 +12,14 @@ using static Testing;
 
 public class UpdateTodoItemTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireValidTodoItemId()
     {
         var command = new UpdateTodoItemCommand { Id = 99, Title = "New Title" };
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldUpdateTodoItem()
     {
         var userId = await RunAsDefaultUserAsync();

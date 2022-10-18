@@ -11,14 +11,14 @@ using static Testing;
 
 public class DeleteTodoListTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldRequireValidTodoListId()
     {
         var command = new DeleteTodoListCommand(99);
         await FluentActions.Invoking(() => SendAsync(command)).Should().ThrowAsync<NotFoundException>();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldDeleteTodoList()
     {
         var listId = await SendAsync(new CreateTodoListCommand

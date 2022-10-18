@@ -7,7 +7,7 @@ namespace RssFeeder.Domain.UnitTests.ValueObjects;
 
 public class ColourTests
 {
-    [Test]
+    [Test, Category("Skip")]
     public void ShouldReturnCorrectColourCode()
     {
         var code = "#FFFFFF";
@@ -17,7 +17,7 @@ public class ColourTests
         colour.Code.Should().Be(code);
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public void ToStringReturnsCode()
     {
         var colour = Colour.White;
@@ -25,7 +25,7 @@ public class ColourTests
         colour.ToString().Should().Be(colour.Code);
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public void ShouldPerformImplicitConversionToColourCodeString()
     {
         string code = Colour.White;
@@ -33,7 +33,7 @@ public class ColourTests
         code.Should().Be("#FFFFFF");
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public void ShouldPerformExplicitConversionGivenSupportedColourCode()
     {
         var colour = (Colour)"#FFFFFF";
@@ -41,7 +41,7 @@ public class ColourTests
         colour.Should().Be(Colour.White);
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public void ShouldThrowUnsupportedColourExceptionGivenNotSupportedColourCode()
     {
         FluentActions.Invoking(() => Colour.From("##FF33CC"))

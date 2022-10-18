@@ -10,7 +10,7 @@ using static Testing;
 
 public class GetTodosTests : BaseTestFixture
 {
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldReturnPriorityLevels()
     {
         await RunAsDefaultUserAsync();
@@ -22,7 +22,7 @@ public class GetTodosTests : BaseTestFixture
         result.PriorityLevels.Should().NotBeEmpty();
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldReturnAllListsAndItems()
     {
         await RunAsDefaultUserAsync();
@@ -51,7 +51,7 @@ public class GetTodosTests : BaseTestFixture
         result.Lists.First().Items.Should().HaveCount(7);
     }
 
-    [Test]
+    [Test, Category("Skip")]
     public async Task ShouldDenyAnonymousUser()
     {
         var query = new GetTodosQuery();
