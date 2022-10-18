@@ -94,7 +94,7 @@ public static class RssBuilderService
         Rss20FeedFormatter rssFeed = new(feed, false);
 
         StringBuilder sb = new();
-        XmlWriter rssWriter = XmlWriter.Create(sb, settings);
+        var rssWriter = XmlWriter.Create(sb, settings);
         rssFeed.WriteTo(rssWriter);
         rssWriter.Close();
 
