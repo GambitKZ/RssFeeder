@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using RssFeeder.Application.RssFeed.Queries.GetRss;
 
 namespace RssFeeder.Web.AzureFunction.Functions;
@@ -20,10 +19,9 @@ public class GetFeed
     }
 
     [FunctionName("GetFeed")]
-    public async Task<IActionResult> Run(
+    public async Task<IActionResult> RunAsync(
         [HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req,
-        CancellationToken cancellationToken,
-        ILogger log)
+        CancellationToken cancellationToken)
     {
         var rssFeed = await _mediator.Send(new GetRssFeedQuery(), cancellationToken);
 

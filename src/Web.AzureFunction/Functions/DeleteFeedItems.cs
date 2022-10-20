@@ -26,7 +26,7 @@ public class DeleteFeedItems
     }
 
     [FunctionName("DeleteFeedItems")]
-    public async Task<IActionResult> Run(
+    public async Task<IActionResult> RunAsync(
         [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequest req,
         CancellationToken cancellationToken)
     {

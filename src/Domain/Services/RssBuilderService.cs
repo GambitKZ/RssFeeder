@@ -21,7 +21,8 @@ public static class RssBuilderService
         List<SyndicationItem> items = GetRssItems(listOfFeeds);
         GetDateOfLastUpdate(listOfFeeds);
 
-        // Otherwise I receive them in wrong order
+        // TODO: Check if this step is necessary
+        // Better save it correctly than revers in the end.
         items.Reverse();
 
         SyndicationFeed feed = FormRssFeed(feedHeader, items);

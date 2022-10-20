@@ -27,7 +27,7 @@ public class UploadFeedBatch
     }
 
     [FunctionName("UploadFeedBatch")]
-    public async Task<IActionResult> Run(
+    public async Task<IActionResult> RunAsync(
         [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)] HttpRequest req,
         CancellationToken cancellationToken)
     {

@@ -12,7 +12,9 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     private const string MentoringPartitionKey = "MentoringProgram";
 
     private readonly IMapper _mapper;
-    private List<TableTransactionAction> transactionLog = new();
+    private readonly List<TableTransactionAction> _transactionLog = new();
+
+    private TableClient TableClient { get; }
 
     public AzureTableRepository(string connectionString, string tableName, IMapper mapper)
     {
@@ -24,8 +26,6 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
         _mapper = mapper;
     }
-
-    private TableClient TableClient { get; }
 
     public void Add(T entity)
     {
@@ -92,12 +92,12 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        var count = transactionLog.Count;
+        var count = _transactionLog.Count;
 
         if (count > 0)
         {
-            await TableClient.SubmitTransactionAsync(transactionLog, cancellationToken);
-            transactionLog.Clear();
+            await TableClient.SubmitTransactionAsync(_transactionLog, cancellationToken);
+            _transactionLog.Clear();
         }
 
         return count;
@@ -106,6 +106,6 @@ public class AzureTableRepository<T> : IRepositoryBase<T> where T : class, IFeed
     private void AddTransaction(FeedItemAzureTableDto item, TableTransactionActionType transactionType)
     {
         var action = new TableTransactionAction(transactionType, item);
-        transactionLog.Add(action);
+        _transactionLog.Add(action);
     }
 }

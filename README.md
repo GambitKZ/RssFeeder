@@ -23,7 +23,7 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [x] Understand Isolated Process of the Azure Function
 - [x] Get rid of Feed Object from Shared Kernel(?)
 - [x] Add Unit Test
-- [ ] Create DTO for Function/Infrastructure
+- [x] Create DTO for Function/Infrastructure
 - [ ] Work with Behaviors
 - [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
 - [ ] Add support of different RSS themes (Mentoring/Info)
