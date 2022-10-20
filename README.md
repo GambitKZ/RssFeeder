@@ -24,10 +24,10 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [x] Get rid of Feed Object from Shared Kernel(?)
 - [x] Add Unit Test
 - [x] Create DTO for Function/Infrastructure
-- [ ] Work with Behaviors
-- [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
-- [ ] Add support of different RSS themes (Mentoring/Info)
 - [ ] Get rid of Template's code
+- [ ] Work with Behaviors
+- [ ] Add support of different RSS themes (Mentoring/Info)
+- [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
 - [ ] Handle exception when failed to remove
 - [ ] Keep and Provide the RSS Headers from *Infrastructure*
 - [ ] Add time of the Insertion for the order
@@ -57,7 +57,7 @@ Works with **SyndicationFeed** internally to build the desired RSS that returned
 
 RSS Headers and Items are provided by *Application*.
 
-Items are provided by *Infrastructure*.
+*Infrastructure* works as persistence Storage.
 
 Headers are hardcoded now, but should be also provided by *Infrastructure*.
 

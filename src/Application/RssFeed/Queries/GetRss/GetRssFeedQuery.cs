@@ -24,7 +24,7 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
         var header = new FeedHeader()
         {
             Title = "Gambit's Personal RSS",
-            AlternateLink = new Uri("http://SomeURI"),
+            AlternateLink = new Uri("https://SomeURI"),
             Description = "RSS that provide the links to the articles given in mentoring program",
             Language = "en-us",
             Authors = new List<string>() { "rusnigdrag@gmail.com" },
