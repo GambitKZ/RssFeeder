@@ -24,7 +24,7 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [x] Get rid of Feed Object from Shared Kernel(?)
 - [x] Add Unit Test
 - [x] Create DTO for Function/Infrastructure
-- [ ] Get rid of Template's code
+- [x] Get rid of Template's code
 - [ ] Work with Behaviors
 - [ ] Add support of different RSS themes (Mentoring/Info)
 - [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
