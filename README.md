@@ -25,6 +25,7 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [x] Add Unit Test
 - [x] Create DTO for Function/Infrastructure
 - [x] Get rid of Template's code
+- [ ] Configure the Pre-Commit checks from [here](https://gsferreira.com/archive/2022/embedding-dotnet-format-in-your-development-cycle/)
 - [ ] Work with Behaviors
 - [ ] Add support of different RSS themes (Mentoring/Info)
 - [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
