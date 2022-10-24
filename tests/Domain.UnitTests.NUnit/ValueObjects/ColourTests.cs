@@ -1,7 +1,7 @@
-﻿using RssFeeder.Domain.Exceptions;
-using RssFeeder.Domain.ValueObjects;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
+using RssFeeder.Domain.Exceptions;
+using RssFeeder.Domain.ValueObjects;
 
 namespace RssFeeder.Domain.UnitTests.ValueObjects;
 

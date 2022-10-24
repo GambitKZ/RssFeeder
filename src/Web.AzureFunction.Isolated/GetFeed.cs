@@ -19,7 +19,7 @@ public class GetFeed
     }
 
     [Function("GetFeed")]
-    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
+    public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
     {
         var rssFeed = await _mediator.Send(new GetRssFeedQuery());
 
