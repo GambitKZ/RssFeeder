@@ -25,7 +25,6 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [x] Add Unit Test
 - [x] Create DTO for Function/Infrastructure
 - [x] Get rid of Template's code
-- [ ] Configure the Pre-Commit checks from [here](https://gsferreira.com/archive/2022/embedding-dotnet-format-in-your-development-cycle/)
 - [ ] Work with Behaviors
 - [ ] Add support of different RSS themes (Mentoring/Info)
 - [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
@@ -36,6 +35,7 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [ ] Handle the Duplication by using the Link as a "Row Key"
 - [ ] Allow to convert HTML to pdf and provide the links to them in RSS. As an [option](https://www.syncfusion.com/blogs/post/html-to-pdf-conversion-in-csharp.aspx)
 - [ ] Feed Removal need to clear the PDF file
+- [ ] Configure the Pre-Commit checks from [here](https://gsferreira.com/archive/2022/embedding-dotnet-format-in-your-development-cycle/)
 
 ## Structure
 
