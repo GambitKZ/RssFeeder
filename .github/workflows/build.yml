@@ -38,15 +38,23 @@ jobs:
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
 
-      - name: Install SonarCloud scanner
+      - name: Install SonarCloud scanner # Looks like this one restore .Net version
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
+      - name: Cache for NuGet #let's try this
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore --locked-mode
 
       - name: Install .Net Coverage
         run: dotnet tool install --global dotnet-coverage
