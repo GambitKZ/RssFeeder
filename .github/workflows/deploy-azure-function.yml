@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 env:
-  AZURE_FUNCTIONAPP_NAME: gambit-rss-feeder  # set this to your application's name
+  AZURE_FUNCTIONAPP_NAME: gambit-rss-feeder     # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/Web.AzureFunction'    # set this to the path to your web app project, defaults to the repository root
   DOTNET_VERSION: '6.0'              # set this to the dotnet version to use
 
