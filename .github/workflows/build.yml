@@ -8,6 +8,6 @@ on:
 
 jobs:
   call-deploy-workflow:
-    if: github.event == 'push' && github.ref_name == 'master'
+    if: ${{github.event_name == 'push' && github.ref_name == 'master'}}
     uses: ./.github/workflows/deploy-azure-function.yml
     secrets: inherit
