@@ -9,15 +9,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="MediatR" Version="10.0.1" />
-      <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0" />
-      <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.3.44">
+      <PackageReference Include="MediatR" Version="11.0.0" />
+      <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.1" />
+      <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.3.48">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="System.ServiceModel.Syndication" Version="6.0.0" />
-      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.3.4" />
-      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     </ItemGroup>
 
     <ItemGroup>
