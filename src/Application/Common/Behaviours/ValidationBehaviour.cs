@@ -16,6 +16,16 @@ public class ValidationBehaviour<TRequest, TResponse> : IPipelineBehavior<TReque
 
     public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
     {
+        return await ValidationPipelineBehaviour(request, next, cancellationToken);
+    }
+
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
+        return await ValidationPipelineBehaviour(request, next, cancellationToken);
+    }
+
+    private async Task<TResponse> ValidationPipelineBehaviour(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    {
         if (_validators.Any())
         {
             var context = new ValidationContext<TRequest>(request);
