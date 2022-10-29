@@ -96,5 +96,5 @@ jobs:
     if: ${{github.event_name == 'push' && github.ref_name == 'master'}}
     uses: ./.github/workflows/deploy-azure-function.yml
     with:
-      artifact-name: ${{ env.ArtifactName }}
+      artifact-name: azurepackage-${{ github.run_number }} # env can be used only in STEP
     secrets: inherit
