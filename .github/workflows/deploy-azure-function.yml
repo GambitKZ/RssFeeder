@@ -5,6 +5,7 @@ on:
     inputs:
       artifact-name:
         required: true
+        type: string
 
 
 env:
