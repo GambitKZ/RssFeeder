@@ -8,7 +8,8 @@ on:
 
 env:
   AZURE_FUNCTIONAPP_NAME: gambit-rss-feeder     # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/Web.AzureFunction'    # set this to the path to your web app project, defaults to the repository root
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/Web.AzureFunction'    # Path to Azure Function project
+  ArtifactName: azurepackage-${{ github.run_number }} # Should be like "azurepackage-15"
   
 
 jobs:
@@ -21,10 +22,12 @@ jobs:
         with:
           java-version: 1.11
 
-      - uses: actions/checkout@v2
+      - name: CheckOut the Code
+        uses: actions/checkout@v2
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
+      # Sonar Cloud part
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
@@ -40,14 +43,15 @@ jobs:
           key: ${{ runner.os }}-sonar-scanner
           restore-keys: ${{ runner.os }}-sonar-scanner
 
-      - name: Install SonarCloud scanner # Looks like this one restore .Net version
+      - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
-      - name: Cache for NuGet #let's try this
+      #.Net part
+      - name: Cache for NuGet
         uses: actions/cache@v3
         with:
           path: ~/.nuget/packages
@@ -56,9 +60,9 @@ jobs:
             ${{ runner.os }}-nuget-
 
       - name: Install dependencies
-        run: dotnet restore --locked-mode
+        run: dotnet restore --locked-mode # Prevent package version update
 
-      - name: Install .Net Coverage
+      - name: Install .Net Coverage # We need it for the file with test result
         run: dotnet tool install --global dotnet-coverage
 
       - name: Build, Test, and Analyze with Sonar
@@ -76,5 +80,12 @@ jobs:
         shell: pwsh
         run: |
           pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
-          dotnet build --configuration Release --no-restore --output ./output
+          dotnet build --configuration Release --no-restore --output /azureweb-output
           popd
+
+      - name: Archive Azure Web artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.ArtifactName }}
+          path: azureweb-output
+          retention-days: 2
