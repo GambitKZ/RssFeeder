@@ -7,9 +7,7 @@ on:
     types: [opened, synchronize, reopened]
 
 env:
-  AZURE_FUNCTIONAPP_NAME: gambit-rss-feeder     # set this to your application's name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/Web.AzureFunction'    # Path to Azure Function project
-  ArtifactName: azurepackage-${{ github.run_number }} # Should be like "azurepackage-15"
+  azure-function-project-path: './src/Web.AzureFunction'    # Path to Azure Function project
   
 
 jobs:
@@ -79,16 +77,16 @@ jobs:
       - name: Build Web part
         shell: pwsh
         run: |
-          pushd './${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}'
+          pushd './${{ env.azure-function-project-path }}'
           dotnet build --configuration Release --no-restore --output /azureweb-output
           popd
 
       - name: Archive Azure Web artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ env.ArtifactName }}
+          name: azurepackage-${{ github.run_number }}
           path: /azureweb-output
-          retention-days: 2
+          retention-days: 1
 
   call-deploy-workflow:
     name: Deploy to Azure
