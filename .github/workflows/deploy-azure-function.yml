@@ -5,11 +5,10 @@ on:
     inputs:
       artifact-name:
         required: true
-        type: string
 
 
 env:
-  AZURE_FUNCTIONAPP_NAME: gambit-rss-feeder     # set this to your application's name
+  AZURE_FUNCTIONAPP_NAME: gambit-rss-feeder # set this to your application's name
 
 jobs:
   build-and-deploy:
@@ -21,11 +20,11 @@ jobs:
       with:
         name: ${{ inputs.artifact-name }}
         path: output
-        
+
     - name: 'Run Azure Functions action'
       uses: Azure/functions-action@v1
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         package: '/output'
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
-    
+
