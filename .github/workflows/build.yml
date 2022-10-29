@@ -89,3 +89,12 @@ jobs:
           name: ${{ env.ArtifactName }}
           path: /azureweb-output
           retention-days: 2
+
+  call-deploy-workflow:
+    name: Deploy to Azure
+    needs: build # Make sure that Build was a success
+    if: ${{github.event_name == 'push' && github.ref_name == 'master'}}
+    uses: ./.github/workflows/deploy-azure-function.yml
+    with:
+      artifact-name: ${{ env.ArtifactName }}
+    secrets: inherit
