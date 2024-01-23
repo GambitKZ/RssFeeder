@@ -1,6 +1,6 @@
 # Summary
 
-I have an E-book that don't syncronize with the PC's browser, bot works fine with the RSS.
+I have an E-book that don't syncronize with the PC's browser, but works fine with the RSS.
 So I will use this feature, saving necessary articles in Azure Table to read them from the E-book.
 
 Build on [following Template](https://github.com/jasontaylordev/CleanArchitecture).

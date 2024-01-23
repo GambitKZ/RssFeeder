@@ -47,8 +47,8 @@ public static class RssBuilderService
     private static void GetDateOfLastUpdate(IEnumerable<IFeedItem> listOfFeeds)
     {
         foreach (DateTimeOffset timestamp in listOfFeeds
-                                                .Where(_ => _.Timestamp.HasValue)
-                                                .Select(_ => _.Timestamp.Value))
+                                            .Where(_ => _.Timestamp.HasValue)
+                                            .Select(_ => _.Timestamp!.Value))
         {
             _latestDate ??= timestamp;
             if (timestamp > _latestDate.Value)
