@@ -15,13 +15,13 @@ jobs:
     name: Build and Tests
     runs-on: windows-latest
     steps:
-      - name: Set up JDK 11 # Java necessary for run of Sonar
-        uses: actions/setup-java@v1
+      - name: Set up JDK 17 # Java necessary for run of Sonar
+        uses: actions/setup-java@v3
         with:
-          java-version: 1.11
+          java-version: 17
 
       - name: CheckOut the Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
