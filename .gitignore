@@ -282,3 +282,6 @@ src/WebUI/ClientApp/package-lock.json
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# Stryker Folder
+/StrykerOutput
