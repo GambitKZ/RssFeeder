@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using RssFeeder.Application.Common.Models;
-using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.Domain.Interfaces;
 
 namespace RssFeeder.Application.FeedItem.Commands.CreateFeedItem;
 

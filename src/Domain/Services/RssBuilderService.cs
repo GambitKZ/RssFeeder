@@ -6,7 +6,6 @@ using FluentValidation;
 using RssFeeder.Domain.Interfaces;
 using RssFeeder.Domain.Mappings;
 using RssFeeder.Domain.Validators;
-using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Domain.Services;
 
@@ -17,6 +16,8 @@ public static class RssBuilderService
     public static string GetRssStringFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
     {
         ValidateHeader(feedHeader);
+
+        var t = "test";
 
         List<SyndicationItem> items = GetRssItems(listOfFeeds);
         GetDateOfLastUpdate(listOfFeeds);

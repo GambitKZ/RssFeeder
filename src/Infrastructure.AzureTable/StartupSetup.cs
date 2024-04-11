@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
-using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.Domain.Interfaces;
 
 namespace RssFeeder.Infrastructure.AzureTable;
 

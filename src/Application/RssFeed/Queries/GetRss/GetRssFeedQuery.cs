@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using RssFeeder.Application.Common.Models;
+using RssFeeder.Domain.Interfaces;
 using RssFeeder.Domain.Services;
-using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Application.RssFeed.Queries.GetRss;
 

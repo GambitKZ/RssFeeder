@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Azure.Data.Tables;
 using RssFeeder.Application.Common.Models;
+using RssFeeder.Domain.Interfaces;
 using RssFeeder.Infrastructure.AzureTable.Models;
-using RssFeeder.SharedKernel.Interfaces;
 
 namespace RssFeeder.Infrastructure.AzureTable;
 
