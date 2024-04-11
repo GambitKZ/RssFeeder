@@ -1,4 +1,4 @@
-﻿namespace RssFeeder.SharedKernel.Interfaces;
+﻿namespace RssFeeder.Domain.Interfaces;
 
 public interface IRepositoryBase<T> where T : class
 {

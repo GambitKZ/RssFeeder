@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.Domain.Interfaces;
 
 namespace RssFeeder.Application.Validators;
 

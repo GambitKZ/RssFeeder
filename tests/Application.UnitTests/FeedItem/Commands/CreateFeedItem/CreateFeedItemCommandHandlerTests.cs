@@ -4,7 +4,7 @@ using AutoMapper;
 using Moq;
 using RssFeeder.Application.Common.Mappings;
 using RssFeeder.Application.Common.Models;
-using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.Domain.Interfaces;
 
 namespace RssFeeder.Application.FeedItem.Commands.CreateFeedItem.Tests;
 

@@ -1,11 +1,9 @@
 # Summary
 
-I have an E-book that don't syncronize with the PC's browser, but works fine with the RSS.
+I have an E-book that don't synchronize with the PC's browser, but works fine with the RSS.
 So I will use this feature, saving necessary articles in Azure Table to read them from the E-book.
 
 Build on [following Template](https://github.com/jasontaylordev/CleanArchitecture).
-
-Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitecture/).
 
 ## Plan
 
@@ -25,6 +23,7 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 - [x] Add Unit Test
 - [x] Create DTO for Function/Infrastructure
 - [x] Get rid of Template's code
+- [x] Remove "Shared Kernel" as there is no need for such a small project
 - [ ] Work with Behaviors
 - [ ] Add support of different RSS themes (Mentoring/Info)
 - [ ] Add Table for keeping all available themes, and logic to work with them (List of themes)
@@ -42,7 +41,7 @@ Take "SharedCore" approach from [here](https://github.com/ardalis/CleanArchitect
 I plan the following structure:
 
 - ~~MVP - a simple example on which I will do the rest of the work~~
-- SharedKernel - hold common things that is shared by ALL layers. **Holds interfaces for Repository, and FeedItem**
+- ~~SharedKernel - hold common things that is shared by ALL layers. **Holds interfaces for Repository, and FeedItem**~~
 - Domain - hold domain logic, models, etc. **Should be used only by Application.**  
 *Is it necessary though? It can be moved to Application and made private.*
 - Application - hold logic, Interfaces, etc. Used in all upper proj. **

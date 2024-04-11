@@ -1,4 +1,4 @@
-﻿using RssFeeder.SharedKernel.Interfaces;
+﻿using RssFeeder.Domain.Interfaces;
 
 namespace RssFeeder.Domain.UnitTests;
 

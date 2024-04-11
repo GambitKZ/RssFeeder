@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using RssFeeder.SharedKernel.Interfaces;
+using RssFeeder.Domain.Interfaces;
 
 namespace RssFeeder.Application.FeedItem.Commands.DeleteFeedItems;
 
