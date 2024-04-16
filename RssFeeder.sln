@@ -23,6 +23,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.AzureFunction", "src\We
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.AzureFunction.Isolated", "src\Web.AzureFunction.Isolated\Web.AzureFunction.Isolated.csproj", "{B1CFC358-67D2-4ED1-8236-B16C9243927D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevOps", "DevOps", "{48A9B3C6-CE9C-48CF-B747-B272C308DAC1}"
+	ProjectSection(SolutionItems) = preProject
+		devops\main.bicep = devops\main.bicep
+		devops\prodParameters.json = devops\prodParameters.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{FD1236E0-4187-477B-ADFB-D741B5CD4B8E}"
+	ProjectSection(SolutionItems) = preProject
+		devops\modules\azureFunction.bicep = devops\modules\azureFunction.bicep
+		devops\modules\managedIdentity.bicep = devops\modules\managedIdentity.bicep
+		devops\modules\storageService.bicep = devops\modules\storageService.bicep
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +87,7 @@ Global
 		{BD47A934-B37B-400F-BF3C-5129D83CF2DB} = {664D406C-2F83-48F0-BFC3-408D5CB53C65}
 		{BCC9012B-4FDE-4B36-B732-657127C5B868} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
 		{B1CFC358-67D2-4ED1-8236-B16C9243927D} = {6ED356A7-8B47-4613-AD01-C85CF28491BD}
+		{FD1236E0-4187-477B-ADFB-D741B5CD4B8E} = {48A9B3C6-CE9C-48CF-B747-B272C308DAC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CB609D9-5D54-4C11-A371-DAAC8B74E430}
