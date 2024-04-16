@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "eastasia"
+    },
+    "storageName": {
+      "value": "rssfeederstorage"
+    },
+    "storageForWebJobsName": {
+      "value": "rssfeedfunctionstorage"
+    },
+    "functionName": {
+      "value": "GambitRssFeeder"
+    },
+    "userPrincipalId": {
+      "value": "9a82897b-fe02-4860-93fc-29bd43c711ec"
+    }
+  }
+}

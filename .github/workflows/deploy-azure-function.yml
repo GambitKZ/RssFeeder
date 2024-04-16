@@ -14,7 +14,7 @@ env:
 jobs:
   build-and-deploy:
     name: Deploy artifact to Azure Function
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
 
     - uses: actions/download-artifact@v3
@@ -28,4 +28,5 @@ jobs:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
         package: 'output'
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
+        
 
