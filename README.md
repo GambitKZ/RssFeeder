@@ -86,7 +86,5 @@ Use 'Bicep" to setup the necessary infrastructure:
 - Managed Identity
 - Log Analytics with App Insights
 
-Run automatically by CI/CD, but for manual run use the following command
-```
-az deployment sub create --location northeurope --template-file main.bicep --parameters prodParameters.json
-```
+More [here](docs/Infrastructure.md)
+

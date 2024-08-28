@@ -26,9 +26,9 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
             Title = "Gambit's Personal RSS",
             AlternateLink = new Uri("https://SomeURI"),
             Description = "RSS that provide the links to the articles given in mentoring program",
-            Language = "en-us",
-            Authors = new List<string>() { "rusnigdrag@gmail.com" },
-            Categories = new List<string>() { "Mentoring URLs" }
+            Language = "ru",
+            Authors = ["rusnigdrag@gmail.com"],
+            Categories = ["Mentoring URLs"]
         };
 
         return RssBuilderService.GetRssStringFromItems(header, listOfFeeds);

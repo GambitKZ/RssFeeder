@@ -4,13 +4,13 @@ targetScope = 'subscription'
 param location string = 'eastasia'
 
 @description('Name of the Storage where data will be kept')
-param storageName string  //'rssfeederstorage'
+param storageName string
 
 @description('Name of the Storage Service that will be used explicitly for the Azure Internal processes')
-param storageForWebJobsName string // 'rssfeedfunctionstorage'
+param storageForWebJobsName string
 
 @description('Name of the Function with the whole logic')
-param functionName string //'GambitRssFeeder'
+param functionName string
 
 @description('PrincipalId of the developer who will managed the resources')
 param userPrincipalId string

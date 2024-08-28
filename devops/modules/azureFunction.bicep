@@ -30,7 +30,7 @@ var applicationInsightsName = 'rss-feeder-apins'
 var functionWorkerRuntime = 'dotnet-isolated'
 
 // Linux app wants format like \'runtime|runtimeVersion\'. For example: \'python|3.9\'')
-var linuxFxVersion = '${functionWorkerRuntime}|8'
+//var linuxFxVersion = '${functionWorkerRuntime}|8'
 
 // Storage Account that keeps function's data
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {

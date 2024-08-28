@@ -15,9 +15,21 @@ public static class RssBuilderService
 
     public static string GetRssStringFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
     {
-        ValidateHeader(feedHeader);
+        SyndicationFeed feed = GetSyndicationFeed(feedHeader, listOfFeeds);
 
-        var t = "test";
+        return GetXmlStringFromFeed(feed);
+    }
+
+    public static MemoryStream GetRssStreamFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
+    {
+        SyndicationFeed feed = GetSyndicationFeed(feedHeader, listOfFeeds);
+
+        return GetFeedStream(feed);
+    }
+
+    private static SyndicationFeed GetSyndicationFeed(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
+    {
+        ValidateHeader(feedHeader);
 
         List<SyndicationItem> items = GetRssItems(listOfFeeds);
         GetDateOfLastUpdate(listOfFeeds);
@@ -26,9 +38,7 @@ public static class RssBuilderService
         // Better save it correctly than revers in the end.
         items.Reverse();
 
-        SyndicationFeed feed = FormRssFeed(feedHeader, items);
-
-        return GetXmlStringFromFeed(feed);
+        return FormRssFeed(feedHeader, items);
     }
 
     private static void ValidateHeader(IFeedHeader feedHeader)
@@ -87,13 +97,14 @@ public static class RssBuilderService
     {
         XmlWriterSettings settings = new()
         {
-            Encoding = Encoding.UTF8,
+            //Encoding = Encoding.UTF8,
+            Encoding = new UTF8Encoding(false), // Most important: ensures the encoding is UTF-8 without BOM
             NewLineHandling = NewLineHandling.Entitize,
             NewLineOnAttributes = true,
             Indent = true
         };
 
-        Rss20FeedFormatter rssFeed = new(feed, false);
+        Rss20FeedFormatter rssFeed = new(feed, true);
 
         StringBuilder sb = new();
         var rssWriter = XmlWriter.Create(sb, settings);
@@ -101,5 +112,29 @@ public static class RssBuilderService
         rssWriter.Close();
 
         return sb.ToString();
+    }
+
+    private static MemoryStream GetFeedStream(SyndicationFeed feed)
+    {
+        Rss20FeedFormatter rssFeed = new(feed);
+
+        XmlWriterSettings settings = new()
+        {
+            // Most important: ensures the encoding is UTF-8 without BOM
+            Encoding = new UTF8Encoding(false),
+            NewLineHandling = NewLineHandling.Entitize,
+            NewLineOnAttributes = true,
+            Indent = true
+        };
+
+        var stream = new MemoryStream();
+        using (var writer = XmlWriter.Create(stream, settings))
+        {
+            rssFeed.WriteTo(writer);
+        }
+
+        stream.Seek(0, SeekOrigin.Begin);
+
+        return stream;
     }
 }
