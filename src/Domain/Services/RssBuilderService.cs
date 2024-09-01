@@ -13,13 +13,6 @@ public static class RssBuilderService
 {
     private static DateTimeOffset? _latestDate = null;
 
-    public static string GetRssStringFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
-    {
-        SyndicationFeed feed = GetSyndicationFeed(feedHeader, listOfFeeds);
-
-        return GetXmlStringFromFeed(feed);
-    }
-
     public static MemoryStream GetRssStreamFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
     {
         SyndicationFeed feed = GetSyndicationFeed(feedHeader, listOfFeeds);
@@ -36,7 +29,7 @@ public static class RssBuilderService
 
         // TODO: Check if this step is necessary
         // Better save it correctly than revers in the end.
-        items.Reverse();
+        //items.Reverse();
 
         return FormRssFeed(feedHeader, items);
     }
@@ -93,33 +86,13 @@ public static class RssBuilderService
         return feed;
     }
 
-    private static string GetXmlStringFromFeed(SyndicationFeed feed)
-    {
-        XmlWriterSettings settings = new()
-        {
-            //Encoding = Encoding.UTF8,
-            Encoding = new UTF8Encoding(false), // Most important: ensures the encoding is UTF-8 without BOM
-            NewLineHandling = NewLineHandling.Entitize,
-            NewLineOnAttributes = true,
-            Indent = true
-        };
-
-        Rss20FeedFormatter rssFeed = new(feed, true);
-
-        StringBuilder sb = new();
-        var rssWriter = XmlWriter.Create(sb, settings);
-        rssFeed.WriteTo(rssWriter);
-        rssWriter.Close();
-
-        return sb.ToString();
-    }
-
     private static MemoryStream GetFeedStream(SyndicationFeed feed)
     {
         Rss20FeedFormatter rssFeed = new(feed);
 
         XmlWriterSettings settings = new()
         {
+            //Encoding = Encoding.UTF8,
             // Most important: ensures the encoding is UTF-8 without BOM
             Encoding = new UTF8Encoding(false),
             NewLineHandling = NewLineHandling.Entitize,

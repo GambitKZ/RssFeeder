@@ -4,22 +4,21 @@ using RssFeeder.Domain.Interfaces;
 using RssFeeder.Domain.Services;
 
 namespace RssFeeder.Application.RssFeed.Queries.GetRss;
-
-public class GetRssFeedQuery : IRequest<string>
+public class GetRssFeedStream : IRequest<MemoryStream>
 { }
 
-public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
+public class GetRssFeedStreamHandler : IRequestHandler<GetRssFeedStream, MemoryStream>
 {
     private readonly IRepositoryBase<IFeedItem> _repository;
 
-    public GetRssFeedQueryHandler(IRepositoryBase<IFeedItem> repository)
+    public GetRssFeedStreamHandler(IRepositoryBase<IFeedItem> repository)
     {
         _repository = repository;
     }
 
-    public async Task<string> Handle(GetRssFeedQuery request, CancellationToken cancellationToken)
+    public async Task<MemoryStream> Handle(GetRssFeedStream request, CancellationToken cancellationToken)
     {
-        var listOfFeeds = await _repository.GetAllAsync(cancellationToken);
+        IEnumerable<IFeedItem> listOfFeeds = await _repository.GetAllAsync(cancellationToken);
 
         var header = new FeedHeader()
         {
@@ -31,6 +30,6 @@ public class GetRssFeedQueryHandler : IRequestHandler<GetRssFeedQuery, string>
             Categories = ["Mentoring URLs"]
         };
 
-        return RssBuilderService.GetRssStringFromItems(header, listOfFeeds);
+        return RssBuilderService.GetRssStreamFromItems(header, listOfFeeds);
     }
 }
