@@ -25,26 +25,30 @@ public class RssBuilderServiceTests
     }
 
     [TestMethod()]
-    public void NoObjectsProvided_ReceiveRssWithHeaders()
+    public void NoObjectsProvided_ReceiveStreamRssWithHeaders()
     {
-        var result = RssBuilderService.GetRssStringFromItems(_feedHeader, new List<TestFeed>());
+        MemoryStream result = RssBuilderService.GetRssStreamFromItems(_feedHeader, new List<TestFeed>());
 
-        SyndicationFeed feed = GetSyndycationFeedFromXmlString(result);
+        result.Position = 0;
+
+        SyndicationFeed feed = GetSyndicationFeedFromStream(result);
 
         Assert.IsTrue(feed.Title.Text.Length > 0);
         Assert.IsTrue(feed.Authors.Count > 0);
         Assert.IsFalse(feed.Items.Any());
     }
 
+
     [TestMethod()]
-    public void EmptyHeader_ReceiveAnException()
+    public void EmptyHeaderForStream_ReceiveAnException()
     {
-        Assert.ThrowsException<ValidationException>(() => RssBuilderService.GetRssStringFromItems(
+        Assert.ThrowsException<ValidationException>(() => RssBuilderService.GetRssStreamFromItems(
                         new TestFeedHeader(), new List<TestFeed>()));
     }
 
+
     [TestMethod()]
-    public void OneObjectInList_ReceiveRssWithOneItem()
+    public void OneObjectInList_ReceiveRssStreamWithOneItem()
     {
         var testFeed = new TestFeed()
         {
@@ -55,18 +59,20 @@ public class RssBuilderServiceTests
             Timestamp = DateTimeOffset.Now
         };
 
-        var result = RssBuilderService.GetRssStringFromItems(_feedHeader, new List<TestFeed>() { testFeed });
+        MemoryStream result = RssBuilderService.GetRssStreamFromItems(_feedHeader, new List<TestFeed>() { testFeed });
 
-        SyndicationFeed feed = GetSyndycationFeedFromXmlString(result);
+        SyndicationFeed feed = GetSyndicationFeedFromStream(result);
 
-        var feedItem = feed.Items.First();
+        SyndicationItem feedItem = feed.Items.First();
         Assert.AreEqual(testFeed.Content, feedItem.Summary.Text);
         Assert.AreEqual(testFeed.Id, feedItem.Id);
         Assert.AreEqual(testFeed.Title, feedItem.Title.Text);
     }
 
+
+
     [TestMethod()]
-    public void TwoObjectInList_TimestampOfLaterFeed()
+    public void TwoObjectInStreamList_TimestampOfLaterFeed()
     {
         var testFeed1 = new TestFeed()
         {
@@ -85,19 +91,26 @@ public class RssBuilderServiceTests
             Timestamp = DateTimeOffset.Now
         };
 
-        var result = RssBuilderService.GetRssStringFromItems(_feedHeader,
+        MemoryStream result = RssBuilderService.GetRssStreamFromItems(_feedHeader,
             new List<TestFeed>() { testFeed1, testFeed2 });
-        SyndicationFeed feed = GetSyndycationFeedFromXmlString(result);
+        SyndicationFeed feed = GetSyndicationFeedFromStream(result);
 
         Assert.AreEqual(2, feed.Items.Count());
         Assert.AreEqual(testFeed2.Timestamp.ToString(), feed.LastUpdatedTime.ToString());
     }
 
-    private static SyndicationFeed GetSyndycationFeedFromXmlString(string result)
+    private static SyndicationFeed GetSyndicationFeedFromXmlString(string result)
     {
-        XmlReader reader = XmlReader.Create(new StringReader(result));
-        SyndicationFeed feed = SyndicationFeed.Load(reader);
+        var reader = XmlReader.Create(new StringReader(result));
+        var feed = SyndicationFeed.Load(reader);
         reader.Close();
         return feed;
+    }
+
+    public static SyndicationFeed GetSyndicationFeedFromStream(Stream stream)
+    {
+        using var xmlReader = XmlReader.Create(stream);
+
+        return SyndicationFeed.Load(xmlReader);
     }
 }

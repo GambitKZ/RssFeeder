@@ -5,7 +5,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using RssFeeder.Application.RssFeed.Queries.GetRss;
 
-namespace RssFeeder.Web.AzureFunction.Isolated;
+namespace RssFeeder.Web.AzureFunction.Isolated.Functions;
 
 public class GetFeed
 {
@@ -21,12 +21,11 @@ public class GetFeed
     [Function("GetFeed")]
     public async Task<HttpResponseData> RunAsync([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData req)
     {
-        var rssFeed = await _mediator.Send(new GetRssFeedQuery());
-
-        var response = req.CreateResponse(HttpStatusCode.OK);
+        await using MemoryStream rssFeed = await _mediator.Send(new GetRssFeedStream());
+        HttpResponseData response = req.CreateResponse(HttpStatusCode.OK);
         response.Headers.Add("Content-Type", "application/xml; charset=utf-8");
 
-        response.WriteString(rssFeed);
+        await response.WriteBytesAsync(rssFeed.ToArray());
 
         return response;
     }

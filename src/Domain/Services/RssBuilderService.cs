@@ -13,22 +13,25 @@ public static class RssBuilderService
 {
     private static DateTimeOffset? _latestDate = null;
 
-    public static string GetRssStringFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
+    public static MemoryStream GetRssStreamFromItems(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
+    {
+        SyndicationFeed feed = GetSyndicationFeed(feedHeader, listOfFeeds);
+
+        return GetFeedStream(feed);
+    }
+
+    private static SyndicationFeed GetSyndicationFeed(IFeedHeader feedHeader, IEnumerable<IFeedItem> listOfFeeds)
     {
         ValidateHeader(feedHeader);
-
-        var t = "test";
 
         List<SyndicationItem> items = GetRssItems(listOfFeeds);
         GetDateOfLastUpdate(listOfFeeds);
 
         // TODO: Check if this step is necessary
         // Better save it correctly than revers in the end.
-        items.Reverse();
+        //items.Reverse();
 
-        SyndicationFeed feed = FormRssFeed(feedHeader, items);
-
-        return GetXmlStringFromFeed(feed);
+        return FormRssFeed(feedHeader, items);
     }
 
     private static void ValidateHeader(IFeedHeader feedHeader)
@@ -83,23 +86,28 @@ public static class RssBuilderService
         return feed;
     }
 
-    private static string GetXmlStringFromFeed(SyndicationFeed feed)
+    private static MemoryStream GetFeedStream(SyndicationFeed feed)
     {
+        Rss20FeedFormatter rssFeed = new(feed);
+
         XmlWriterSettings settings = new()
         {
-            Encoding = Encoding.UTF8,
+            //Encoding = Encoding.UTF8,
+            // Most important: ensures the encoding is UTF-8 without BOM
+            Encoding = new UTF8Encoding(false),
             NewLineHandling = NewLineHandling.Entitize,
             NewLineOnAttributes = true,
             Indent = true
         };
 
-        Rss20FeedFormatter rssFeed = new(feed, false);
+        var stream = new MemoryStream();
+        using (var writer = XmlWriter.Create(stream, settings))
+        {
+            rssFeed.WriteTo(writer);
+        }
 
-        StringBuilder sb = new();
-        var rssWriter = XmlWriter.Create(sb, settings);
-        rssFeed.WriteTo(rssWriter);
-        rssWriter.Close();
+        stream.Seek(0, SeekOrigin.Begin);
 
-        return sb.ToString();
+        return stream;
     }
 }

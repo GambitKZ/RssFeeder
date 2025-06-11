@@ -1,4 +1,4 @@
-name: Build
+name: Build and Deploy
 on:
   push:
     branches:
@@ -8,12 +8,11 @@ on:
 
 env:
   azure-function-project-path: './src/Web.AzureFunction'    # Path to Azure Function project
-  
 
 jobs:
   build:
     name: Build and Tests
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Set up JDK 17 # Java necessary for run of Sonar
         uses: actions/setup-java@v3
@@ -72,11 +71,12 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"GambitKZ_RssFeeder" /o:"gambitkz" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
           dotnet build --configuration Release --no-restore
-          dotnet-coverage collect 'dotnet test --filter TestCategory!~Skip --no-restore' -f xml  -o 'coverage.xml'          
+          dotnet-coverage collect 'dotnet test --filter TestCategory!~Skip --no-restore' -f xml  -o 'coverage.xml'
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
 
       - name: Build Web part
         shell: pwsh
+        if: ${{github.event_name == 'push' && github.ref_name == 'master'}}
         run: |
           pushd './${{ env.azure-function-project-path }}'
           dotnet build --configuration Release --no-restore --output /azureweb-output
@@ -84,6 +84,7 @@ jobs:
 
       - name: Archive Azure Web artifacts
         uses: actions/upload-artifact@v3
+        if: ${{github.event_name == 'push' && github.ref_name == 'master'}}
         with:
           name: azurepackage-${{ github.run_number }}
           path: /azureweb-output

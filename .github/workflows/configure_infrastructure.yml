@@ -1,0 +1,28 @@
+name: Infrastructure Deploy
+on: [workflow_dispatch]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Bicep code
+        uses: actions/checkout@v3
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy Infrastructure
+        uses: azure/arm-deploy@v1
+        with:
+          scope: subscription
+          region: northeurope
+          template: ./devops/main.bicep
+          parameters: ./devops/prodParameters.json storageName=${{ secrets.STORAGE_NAME }} storageForWebJobsName=${{ secrets.STORAGE_FOR_WEB_JOBS_NAME }} functionName=${{ secrets.FUNCTION_NAME }} userPrincipalId=${{ secrets.USER_PRINCIPAL_ID }}
