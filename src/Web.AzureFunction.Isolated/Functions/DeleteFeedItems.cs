@@ -21,7 +21,7 @@ public class DeleteFeedItems
       [HttpTrigger(AuthorizationLevel.Function, "delete", Route = null)] HttpRequestData req,
       CancellationToken cancellationToken)
     {
-        string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        string requestBody = await new StreamReader(req.Body).ReadToEndAsync(cancellationToken);
 
         dynamic feedIds = JsonSerializer.Deserialize<List<string>>(requestBody);
 
